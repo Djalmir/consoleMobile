@@ -44,7 +44,7 @@ document.body.appendChild(consoleBt)
 
 let container = document.createElement('div')
 Object.assign(container.style, {
-	position: 'absolute',
+	position: 'fixed',
 	top: '-120vh',
 	left: '0',
 	width: '100%',
