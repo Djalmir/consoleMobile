@@ -37,6 +37,7 @@ document.onmousemove = (e) => {
 }
 document.ontouchmove = (e) =>{
 	if(movingBt){
+		e.preventDefault()
 		consoleBt.style.left = e.touches[e.touches.length-1].screenX-20+'px',
 		consoleBt.style.top = e.touches[e.touches.length-1].screenY-20+'px'
 	}
