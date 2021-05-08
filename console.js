@@ -31,15 +31,15 @@ consoleBt.ontouchstart = consoleBt.onmousedown
 
 document.onmousemove = (e) => {
 	if(movingBt){
-		consoleBt.style.left = e.screenX-20+'px',
-		consoleBt.style.top = e.screenY-20+'px'
+		consoleBt.style.left = e.clientX-20+'px',
+		consoleBt.style.top = e.clientY-20+'px'
 	}
 }
 document.ontouchmove = (e) =>{
 	if(movingBt){
 		e.preventDefault()
-		consoleBt.style.left = e.touches[e.touches.length-1].screenX-20+'px',
-		consoleBt.style.top = e.touches[e.touches.length-1].screenY-20+'px'
+		consoleBt.style.left = e.touches[e.touches.length-1].clientX-20+'px',
+		consoleBt.style.top = e.touches[e.touches.length-1].clientY-20+'px'
 	}
 }
 
