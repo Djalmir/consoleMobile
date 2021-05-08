@@ -1,7 +1,7 @@
 let consoleBt = document.createElement('div')
 Object.assign(consoleBt.style, {
 	position: 'fixed',
-	right: '10px',
+	left: '10px',
 	top: '20px',
 	borderRadius: '50%',
 	backgroundColor: '#0060ff80',
@@ -14,16 +14,37 @@ Object.assign(consoleBt.style, {
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	fontFamily: 'sans-serif'
+	fontFamily: 'sans-serif',
+	cursor: 'pointer',
+	userSelect: 'none'
 })
 consoleBt.innerHTML='<b>C</b>'
 
+let movingBt = false
 consoleBt.onmousedown = () => {
+	movingBt = true
 	Object.assign(consoleBt.style, {
 		transform: 'scale(.95)'
 	})
 }
 consoleBt.ontouchstart = consoleBt.onmousedown
+
+document.onmousemove = (e) => {
+	if(movingBt){
+		consoleBt.style.left = e.clientX-20+'px',
+		consoleBt.style.top = e.clientY-20+'px'
+	}
+}
+document.ontouchmove = (e) =>{
+	if(movingBt){
+		consoleBt.style.left = e.touches[e.touches.length-1].clientX-20+'px',
+		consoleBt.style.top = e.touches[e.touches.length-1].clientY-20+'px'
+	}
+}
+
+document.onmouseup = () => {
+	movingBt = false
+}
 
 consoleBt.onmouseup = () => {
 	Object.assign(consoleBt.style, {
