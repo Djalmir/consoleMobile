@@ -8,7 +8,7 @@ Object.assign(consoleBt.style, {
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
-	zIndex: '2'
+	zIndex: '9999'
 })
 
 consoleBt.onmousedown = () => {
@@ -48,7 +48,8 @@ Object.assign(container.style, {
 	transition: 'top .2s linear',
 	color: '#fff',
 	boxSizing: 'border-box',
-	overflowY: 'auto'
+	overflowY: 'auto',
+	zIndex: '9998'
 })
 
 let h1 = document.createElement('h1')
