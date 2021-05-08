@@ -4,12 +4,19 @@ Object.assign(consoleBt.style, {
 	right: '10px',
 	top: '20px',
 	borderRadius: '50%',
-	backgroundColor: '#0547aa',
+	backgroundColor: '#0060ff80',
+	boxShadow: 'inset 0 0 10px #000000dd',
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
-	zIndex: '9999'
+	zIndex: '9999',
+	color: '#fff',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	fontFamily: 'sans-serif'
 })
+consoleBt.innerHTML='<b>C</b>'
 
 consoleBt.onmousedown = () => {
 	Object.assign(consoleBt.style, {
@@ -24,10 +31,11 @@ consoleBt.onmouseup = () => {
 	})
 }
 consoleBt.ontouchcancel = consoleBt.onmouseup
+consoleBt.ontouchend = consoleBt.onmouseup
 consoleBt.onmouseleave = consoleBt.onmouseup
 
 consoleBt.onclick = () => {showHideConsole()}
-consoleBt.ontouchend = () => {
+consoleBt.ontouch = () => {
 	consoleBt.onmouseup()
 	showHideConsole()
 }
@@ -40,7 +48,7 @@ Object.assign(container.style, {
 	top: '-120vh',
 	left: '0',
 	width: '100%',
-	height: '100%',
+	height: '100vh',
 	display: 'flex',
 	flexDirection: 'column',
 	backgroundColor: '#000000cc',
@@ -80,7 +88,8 @@ Object.assign(input.style, {
 	padding: '8px 12px',
 	boxSizing: 'border-box',
 	fontSize: '16px',
-	color: '#fff'
+	color: '#fff',
+	borderBottom: '1px solid #0060ff'
 })
 input.onkeypress = callConsole
 container.appendChild(input)
