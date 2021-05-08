@@ -1,6 +1,6 @@
 let consoleBt = document.createElement('div')
 Object.assign(consoleBt.style, {
-	position: 'absolute',
+	position: 'fixed',
 	right: '10px',
 	top: '20px',
 	borderRadius: '50%',
@@ -93,6 +93,9 @@ Object.assign(input.style, {
 })
 input.onkeypress = callConsole
 container.appendChild(input)
+container.ondblclick=()=>{
+	input.focus()
+}
 
 document.body.appendChild(container)
 
@@ -116,7 +119,7 @@ console.log = (...items) => {
 		items[i] = (typeof item === 'object' ? JSON.stringify(item, null, 2) : item)
 	})
 	output.innerHTML += '<br />' + items.join(' ') + '<br />'
-
+	container.scrollTo(0, container.offsetHeight+200)
 }
 
 function consoleInput(data) {
