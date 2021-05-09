@@ -36,8 +36,8 @@ document.onmousemove = (e) => {
 	}
 }
 document.addEventListener('touchmove', (e) => {
-	e.preventDefault()
 	if (movingBt) {
+		e.preventDefault()
 		consoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
 			consoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
 	}
@@ -74,7 +74,7 @@ Object.assign(container.style, {
 	top: '-120vh',
 	left: '0',
 	width: '100%',
-	height: '100vh',
+	height: '100%',
 	display: 'flex',
 	flexDirection: 'column',
 	backgroundColor: '#000000cc',
@@ -82,23 +82,26 @@ Object.assign(container.style, {
 	transition: 'top .2s linear',
 	color: '#fff',
 	boxSizing: 'border-box',
-	overflowY: 'auto',
 	zIndex: '9998'
 })
-
-let h1 = document.createElement('h1')
-h1.innerText = 'CONSOLE'
-h1.style.padding = '0 12px'
-container.appendChild(h1)
 
 let output = document.createElement('pre')
 output.id = 'output'
 Object.assign(output.style, {
 	width: '100%',
-	padding: '8px 12px',
+	margin: '0',
+	padding: '50px 12px',
 	boxSizing: 'border-box',
-	fontSize: '16px'
+	fontSize: '16px',
+	flex: '1',
+	overflow: 'auto'
 })
+
+let h1 = document.createElement('h1')
+h1.innerText = 'CONSOLE'
+h1.style.padding = '0'
+output.appendChild(h1)
+
 container.appendChild(output)
 
 let input = document.createElement('input')
@@ -119,9 +122,11 @@ Object.assign(input.style, {
 })
 input.onkeypress = callConsole
 container.appendChild(input)
-container.ondblclick = () => {
+container.addEventListener('dblclick', (e) => {
+	e.preventDefault()
+	console.log('deveria ter focado')
 	input.focus()
-}
+}, {passive: false})
 
 document.body.appendChild(container)
 
@@ -145,7 +150,7 @@ console.log = (...items) => {
 		items[i] = (typeof item === 'object' ? JSON.stringify(item, null, 2) : item)
 	})
 	output.innerHTML += '<br />' + items.join(' ') + '<br />'
-	container.scrollTo(0, container.offsetHeight + 200)
+	output.scrollTo(0, output.offsetHeight + 200)
 }
 
 function consoleInput(data) {
