@@ -85,6 +85,52 @@ Object.assign(container.style, {
 	zIndex: '9998'
 })
 
+let clearConsoleBt = document.createElement('div')
+Object.assign(clearConsoleBt.style, {
+	position: 'absolute',
+	right: '10px',
+	top: '10px',
+	borderRadius: '50%',
+	backgroundColor: '#ff600080',
+	boxShadow: 'inset 0 0 10px #000000dd',
+	width: '40px',
+	height: '40px',
+	webkitTapHighlightColor: 'transparent',
+	zIndex: '9999',
+	color: '#fff',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	fontFamily: 'sans-serif',
+	cursor: 'pointer',
+	userSelect: 'none'
+})
+clearConsoleBt.innerHTML = '<b>&#X1F5D1</b>'
+
+clearConsoleBt.onmousedown = () => {
+	Object.assign(clearConsoleBt.style, {
+		transform: 'scale(.95)'
+	})
+}
+clearConsoleBt.ontouchstart = clearConsoleBt.onmousedown
+
+clearConsoleBt.onmouseup = () => {
+	Object.assign(clearConsoleBt.style, {
+		transform: 'scale(1)'
+	})
+}
+clearConsoleBt.ontouchcancel = clearConsoleBt.onmouseup
+clearConsoleBt.ontouchend = clearConsoleBt.onmouseup
+clearConsoleBt.onmouseleave = clearConsoleBt.onmouseup
+
+clearConsoleBt.onclick = () => {clearConsole()}
+clearConsoleBt.ontouch = () => {
+	clearConsoleBt.onmouseup()
+	clearConsole()
+}
+
+container.appendChild(clearConsoleBt)
+
 let output = document.createElement('pre')
 output.id = 'output'
 Object.assign(output.style, {
@@ -93,7 +139,6 @@ Object.assign(output.style, {
 	padding: '50px 12px',
 	boxSizing: 'border-box',
 	fontSize: '16px',
-	flex: '1',
 	overflow: 'auto'
 })
 
@@ -124,6 +169,7 @@ input.onkeypress = callConsole
 container.appendChild(input)
 container.addEventListener('dblclick', (e) => {
 	e.preventDefault()
+	output.scrollTo(0, output.offsetHeight + 999)
 	input.focus()
 }, {passive: false})
 
@@ -167,4 +213,12 @@ function callConsole(e) {
 		consoleInput(input.value)
 		input.value = ''
 	}
+}
+
+function clearConsole() {
+	output.innerHTML = ''
+	let h1 = document.createElement('h1')
+	h1.innerText = 'CONSOLE'
+	h1.style.padding = '0'
+	output.appendChild(h1)
 }
