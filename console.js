@@ -124,7 +124,6 @@ input.onkeypress = callConsole
 container.appendChild(input)
 container.addEventListener('dblclick', (e) => {
 	e.preventDefault()
-	console.log('deveria ter focado')
 	input.focus()
 }, {passive: false})
 
