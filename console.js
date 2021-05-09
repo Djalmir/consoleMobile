@@ -138,7 +138,7 @@ Object.assign(output.style, {
 	margin: '0',
 	padding: '50px 12px',
 	boxSizing: 'border-box',
-	fontSize: '16px',
+	fontSize: '14px',
 	overflow: 'auto'
 })
 
@@ -151,14 +151,13 @@ container.appendChild(output)
 
 let input = document.createElement('input')
 input.type = 'text'
-input.id = 'input'
 input.autocomplete = 'off'
+input.id = 'input'
 Object.assign(input.style, {
 	width: '100%',
 	backgroundColor: '#0000004d',
 	border: 'none',
 	outline: 'none',
-	resize: 'none',
 	padding: '8px 12px',
 	boxSizing: 'border-box',
 	fontSize: '16px',
@@ -166,13 +165,13 @@ Object.assign(input.style, {
 	borderBottom: '1px solid #0060ff'
 })
 input.onkeypress = callConsole
-container.appendChild(input)
 container.addEventListener('dblclick', (e) => {
 	e.preventDefault()
 	output.scrollTo(0, output.offsetHeight + 999)
 	input.focus()
 }, {passive: false})
 
+container.appendChild(input)
 document.body.appendChild(container)
 
 let showingConsole = false
