@@ -18,7 +18,7 @@ Object.assign(consoleBt.style, {
 	cursor: 'pointer',
 	userSelect: 'none'
 })
-consoleBt.innerHTML='<b>C</b>'
+consoleBt.innerHTML = '<b>C</b>'
 
 let movingBt = false
 consoleBt.onmousedown = () => {
@@ -30,18 +30,18 @@ consoleBt.onmousedown = () => {
 consoleBt.ontouchstart = consoleBt.onmousedown
 
 document.onmousemove = (e) => {
-	if(movingBt){
-		consoleBt.style.left = e.clientX-20+'px',
-		consoleBt.style.top = e.clientY-20+'px'
+	if (movingBt) {
+		consoleBt.style.left = e.clientX - 20 + 'px',
+			consoleBt.style.top = e.clientY - 20 + 'px'
 	}
 }
-document.ontouchmove = (e) =>{
-	if(movingBt){
-		e.preventDefault()
-		consoleBt.style.left = e.touches[e.touches.length-1].clientX-20+'px',
-		consoleBt.style.top = e.touches[e.touches.length-1].clientY-20+'px'
+document.addEventListener('touchmove', (e) => {
+	e.preventDefault()
+	if (movingBt) {
+		consoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
+			consoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
 	}
-}
+}, {passive: false})
 
 document.onmouseup = () => {
 	movingBt = false
@@ -119,7 +119,7 @@ Object.assign(input.style, {
 })
 input.onkeypress = callConsole
 container.appendChild(input)
-container.ondblclick=()=>{
+container.ondblclick = () => {
 	input.focus()
 }
 
@@ -145,7 +145,7 @@ console.log = (...items) => {
 		items[i] = (typeof item === 'object' ? JSON.stringify(item, null, 2) : item)
 	})
 	output.innerHTML += '<br />' + items.join(' ') + '<br />'
-	container.scrollTo(0, container.offsetHeight+200)
+	container.scrollTo(0, container.offsetHeight + 200)
 }
 
 function consoleInput(data) {
