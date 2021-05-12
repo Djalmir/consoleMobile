@@ -5,7 +5,7 @@ Object.assign(consoleBt.style, {
 	top: '10px',
 	borderRadius: '50%',
 	backgroundColor: '#00000080',
-	backgroundImage: "url('https://github.com/Djalmir/consoleMobile/blob/1.8/floatButton.png?raw=true')",
+	backgroundImage: "url('https://github.com/Djalmir/consoleMobile/blob/0.0.2/floatButton.png?raw=true')",
 	boxShadow: 'inset 0 0 0 2px #0030cc',
 	backgroundSize: '100%',
 	width: '40px',
@@ -137,8 +137,8 @@ pre.id = 'pre'
 Object.assign(pre.style, {
 	position: 'relative',
 	width: '100%',
-	margin: '0 -28px',
-	padding: '50px 20px',
+	margin: '0',
+	padding: '0 0 50px',
 	boxSizing: 'border-box',
 	fontSize: '14px',
 	overflow: 'auto',
@@ -146,13 +146,20 @@ Object.assign(pre.style, {
 
 let h1 = document.createElement('h1')
 h1.innerText = 'CONSOLE'
-h1.style.marginLeft= '20px'
+h1.style.background = '#0000004d'
+h1.style.margin = '0'
+h1.style.padding = '20px 20px 40px'
 pre.appendChild(h1)
+let hr = document.createElement('hr')
+hr.style.border = 'none'
+hr.style.borderBottom = '1px solid #0060ff'
+hr.style.margin = '0'
+pre.appendChild(hr)
 
 let output = document.createElement('code')
 output.id = 'output'
 Object.assign(output.style, {
-	tabSize:'20px'
+	tabSize: '20px'
 })
 
 pre.appendChild(output)
@@ -202,7 +209,7 @@ console.log = (...items) => {
 	items.forEach((item, i) => {
 		items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
-	output.innerText += `\n\t${items.join('')}\n`
+	output.innerText += `\n\t${ items.join('') }\n`
 	output.scrollTo(0, output.offsetHeight + 200)
 }
 
