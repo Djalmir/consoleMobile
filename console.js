@@ -139,7 +139,8 @@ Object.assign(output.style, {
 	padding: '50px 12px',
 	boxSizing: 'border-box',
 	fontSize: '14px',
-	overflow: 'auto'
+	overflow: 'auto',
+	textIndent: '10px'
 })
 
 let h1 = document.createElement('h1')
@@ -191,9 +192,11 @@ console.log = (...items) => {
 	oldLog.apply(this, items)
 
 	items.forEach((item, i) => {
-		items[i] = (typeof item === 'object' ? JSON.stringify(item, null, 2) : item)
+		items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
-	output.innerHTML += '<br />' + items.join(' ') + '<br />'
+	output.innerHTML+='<br />'
+	output.innerText += items.join(' ')
+	output.innerHTML+='<br />'
 	output.scrollTo(0, output.offsetHeight + 200)
 }
 
@@ -221,3 +224,10 @@ function clearConsole() {
 	h1.style.padding = '0'
 	output.appendChild(h1)
 }
+
+console.log('testezinho')
+var teste={
+	nome:"Zinha",
+	idade:18
+}
+console.log(teste)
