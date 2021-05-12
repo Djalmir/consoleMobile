@@ -2,7 +2,7 @@ let consoleBt = document.createElement('div')
 Object.assign(consoleBt.style, {
 	position: 'fixed',
 	left: '10px',
-	top: '20px',
+	top: '10px',
 	borderRadius: '50%',
 	backgroundColor: '#0060ff80',
 	backgroundImage: "url('https://github.com/Djalmir/consoleMobile/blob/1.8/floatButton.png?raw=true')",
@@ -16,6 +16,10 @@ Object.assign(consoleBt.style, {
 	cursor: 'pointer',
 	userSelect: 'none'
 })
+if (localStorage.getItem('consoleBt.x')) {
+	consoleBt.style.left = localStorage.getItem('consoleBt.x')
+	consoleBt.style.top = localStorage.getItem('consoleBt.y')
+}
 
 let movingBt = false
 consoleBt.onmousedown = () => {
@@ -42,11 +46,11 @@ document.addEventListener('touchmove', (e) => {
 
 document.onmouseup = () => {
 	movingBt = false
+	localStorage.setItem('consoleBt.x', consoleBt.style.left)
+	localStorage.setItem('consoleBt.y', consoleBt.style.top)
 }
 
-document.ontouchend = () => {
-	movingBt = false
-}
+document.ontouchend = document.onmouseup
 
 consoleBt.onmouseup = () => {
 	Object.assign(consoleBt.style, {
@@ -128,24 +132,31 @@ clearConsoleBt.ontouch = () => {
 
 container.appendChild(clearConsoleBt)
 
-let output = document.createElement('pre')
-output.id = 'output'
-Object.assign(output.style, {
+let pre = document.createElement('pre')
+pre.id = 'pre'
+Object.assign(pre.style, {
+	position: 'relative',
 	width: '100%',
-	margin: '0',
-	padding: '50px 12px',
+	margin: '0 -28px',
+	padding: '50px 20px',
 	boxSizing: 'border-box',
 	fontSize: '14px',
 	overflow: 'auto',
-	textIndent: '10px'
 })
 
 let h1 = document.createElement('h1')
 h1.innerText = 'CONSOLE'
-h1.style.padding = '0'
-output.appendChild(h1)
+h1.style.marginLeft= '20px'
+pre.appendChild(h1)
 
-container.appendChild(output)
+let output = document.createElement('code')
+output.id = 'output'
+Object.assign(output.style, {
+	tabSize:'20px'
+})
+
+pre.appendChild(output)
+container.appendChild(pre)
 
 let input = document.createElement('input')
 input.type = 'text'
@@ -191,9 +202,7 @@ console.log = (...items) => {
 	items.forEach((item, i) => {
 		items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
-	output.innerHTML+='<br />'
-	output.innerText += items.join(' ')
-	output.innerHTML+='<br />'
+	output.innerText += `\n\t${items.join('')}\n`
 	output.scrollTo(0, output.offsetHeight + 200)
 }
 
@@ -216,8 +225,11 @@ function callConsole(e) {
 
 function clearConsole() {
 	output.innerHTML = ''
-	let h1 = document.createElement('h1')
-	h1.innerText = 'CONSOLE'
-	h1.style.padding = '0'
-	output.appendChild(h1)
+}
+
+document.body.onresize = () => {
+	if (consoleBt.offsetLeft + consoleBt.offsetWidth > window.innerWidth) {
+		consoleBt.style.left = window.innerWidth - consoleBt.offsetWidth + 'px'
+		localStorage.setItem('consoleBt.x', consoleBt.style.left)
+	}
 }
