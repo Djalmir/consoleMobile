@@ -5,7 +5,7 @@ Object.assign(consoleBt.style, {
 	top: '20px',
 	borderRadius: '50%',
 	backgroundColor: '#0060ff80',
-	backgroundImage: "url('floatButton.png')",
+	backgroundImage: "url('https://github.com/Djalmir/consoleMobile/blob/1.7/floatButton.png?raw=true')",
 	backgroundSize: '100%',
 	boxShadow: 'inset 0 0 10px #000000dd',
 	width: '40px',
