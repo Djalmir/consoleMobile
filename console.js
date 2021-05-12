@@ -232,4 +232,8 @@ document.body.onresize = () => {
 		consoleBt.style.left = window.innerWidth - consoleBt.offsetWidth + 'px'
 		localStorage.setItem('consoleBt.x', consoleBt.style.left)
 	}
+	if (consoleBt.offsetTop + consoleBt.offsetHeight > window.innerHeight) {
+		consoleBt.style.top = window.innerHeight - consoleBt.offsetHeight + 'px'
+		localStorage.setItem('consoleBt.y', consoleBt.style.top)
+	}
 }
