@@ -224,10 +224,3 @@ function clearConsole() {
 	h1.style.padding = '0'
 	output.appendChild(h1)
 }
-
-console.log('testezinho')
-var teste={
-	nome:"Zinha",
-	idade:18
-}
-console.log(teste)
