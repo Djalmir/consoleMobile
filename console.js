@@ -5,20 +5,17 @@ Object.assign(consoleBt.style, {
 	top: '20px',
 	borderRadius: '50%',
 	backgroundColor: '#0060ff80',
+	backgroundImage: "url('floatButton.png')",
+	backgroundSize: '100%',
 	boxShadow: 'inset 0 0 10px #000000dd',
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
 	zIndex: '9999',
 	color: '#fff',
-	display: 'flex',
-	justifyContent: 'center',
-	alignItems: 'center',
-	fontFamily: 'sans-serif',
 	cursor: 'pointer',
 	userSelect: 'none'
 })
-consoleBt.innerHTML = '<b>C</b>'
 
 let movingBt = false
 consoleBt.onmousedown = () => {
