@@ -163,7 +163,7 @@ if (style.styleSheet) {
 	#pre ::-webkit-scrollbar {
 		background: transparent;
 		width: 8px;
-		height: 4px;
+		height: 0;
 	}
 	
 	#pre ::-webkit-scrollbar-track {
@@ -186,7 +186,7 @@ else {
 	#pre::-webkit-scrollbar {
 		background: transparent!important;
 		width: 8px;
-		height: 4px;
+		height: 0;
 	}
 	
 	#pre::-webkit-scrollbar-track {
@@ -270,10 +270,17 @@ console.log = (...items) => {
 				let itemLines = item.outerHTML.split(/\r?\n/)
 				items[i] = itemLines[0] + '\n'
 				for (let o = 1; o < itemLines.length; o++) {
-					for (let p = 0; p < count; p++){
+					for (let p = 0; p < count; p++) {
 						itemLines[o] = itemLines[o].slice(1)
 					}
-					items[i]+=itemLines[o]+'\n'
+					items[i] += itemLines[o] + '\n'
+				}
+				while (itemLines[itemLines.length - 1].charAt(0) == ' ' || itemLines[itemLines.length - 1].charAt(0) == '\t') {
+					items[i] = itemLines[0] + '\n'
+					for (let o = 1; o < itemLines.length; o++) {
+						itemLines[o] = itemLines[o].slice(1)
+						items[i] += itemLines[o] + '\n'
+					}
 				}
 			}
 			else {
