@@ -137,7 +137,7 @@ h1.innerText = 'CONSOLE'
 Object.assign(h1.style, {
 	background: '#0000004d',
 	margin: '0',
-	padding: '20px 20px 40px',
+	padding: '20px 12px 40px',
 	position: 'sticky',
 	left: '0',
 	borderBottom: '1px solid #0060ff',
@@ -151,11 +151,60 @@ Object.assign(pre.style, {
 	position: 'relative',
 	width: '100%',
 	margin: '0',
-	padding: '0 50px 50px 0',
+	padding: '0 50px 50px 12px',
 	boxSizing: 'border-box',
 	fontSize: '14px',
-	overflow: 'auto',
+	overflow: 'auto'
 })
+
+let style = document.createElement('style')
+if (style.styleSheet) {
+	style.styleSheet.cssText = `
+	#pre ::-webkit-scrollbar {
+		background: transparent;
+		width: 8px;
+		height: 4px;
+	}
+	
+	#pre ::-webkit-scrollbar-track {
+		background: #612c7d4d;
+	}
+	
+	#pre ::-webkit-scrollbar-thumb {
+		background: #612c7d;
+		box-shadow: inset 0px 0px 5px #00000080;
+	}
+	
+	#pre ::selection {
+		background: #612c7d;
+		color: #fff;
+	}
+	`
+}
+else {
+	style.appendChild(document.createTextNode(`
+	#pre::-webkit-scrollbar {
+		background: transparent!important;
+		width: 8px;
+		height: 4px;
+	}
+	
+	#pre::-webkit-scrollbar-track {
+		background: #0060ff4d;
+	}
+	
+	#pre::-webkit-scrollbar-thumb {
+		background: #0030cc;
+		box-shadow: inset 0px 0px 5px #00000080;
+	}
+	
+	#pre ::selection {
+		background: #0030cc;
+		color: #fff;
+	}
+	`))
+}
+document.getElementsByTagName('head')[0].appendChild(style)
 
 
 let output = document.createElement('code')
@@ -209,9 +258,33 @@ console.log = (...items) => {
 	oldLog.apply(this, items)
 
 	items.forEach((item, i) => {
-		items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
+		if (typeof item === 'object') {
+			if (item.tagName) {
+				let count = 0
+				let parent = item
+				while (parent.tagName != 'BODY') {
+					count++
+					parent = parent.parentNode
+				}
+
+				let itemLines = item.outerHTML.split(/\r?\n/)
+				items[i] = itemLines[0] + '\n'
+				for (let o = 1; o < itemLines.length; o++) {
+					for (let p = 0; p < count; p++){
+						itemLines[o] = itemLines[o].slice(1)
+					}
+					items[i]+=itemLines[o]+'\n'
+				}
+			}
+			else {
+				JSON.stringify(item, null, 2)
+			}
+		}
+		else
+			items[i] = item
+		// items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
-	output.innerText += `\n\t\t${ items.join('') }\n`
+	output.innerText += `\n${ items.join('') }\n`
 	pre.scrollTo(0, pre.offsetHeight + 200)
 }
 
@@ -245,8 +318,8 @@ document.body.onresize = () => {
 		consoleBt.style.left = window.innerWidth - consoleBt.offsetWidth + 'px'
 		localStorage.setItem('consoleBt.x', consoleBt.style.left)
 	}
-	if(consoleBt.offsetTop < 0) {
-		consoleBt.style.top='0'
+	if (consoleBt.offsetTop < 0) {
+		consoleBt.style.top = '0'
 		localStorage.setItem('consoleBt.y', consoleBt.style.top)
 	}
 	if (consoleBt.offsetTop + consoleBt.offsetHeight > window.innerHeight) {
