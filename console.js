@@ -162,7 +162,7 @@ if (style.styleSheet) {
 	style.styleSheet.cssText = `
 	#pre ::-webkit-scrollbar {
 		background: transparent;
-		width: 2px;
+		width: 4px;
 		height: 0;
 	}
 	
@@ -185,7 +185,7 @@ else {
 	style.appendChild(document.createTextNode(`
 	#pre::-webkit-scrollbar {
 		background: transparent!important;
-		width: 8px;
+		width: 4px;
 		height: 0;
 	}
 	
