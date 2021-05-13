@@ -162,7 +162,7 @@ if (style.styleSheet) {
 	style.styleSheet.cssText = `
 	#pre ::-webkit-scrollbar {
 		background: transparent;
-		width: 4px;
+		width: 2px;
 		height: 0;
 	}
 	
