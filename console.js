@@ -151,7 +151,7 @@ Object.assign(pre.style, {
 	position: 'relative',
 	width: '100%',
 	margin: '0',
-	padding: '0 50px 50px 0',
+	padding: '0 50px 50px 12px',
 	boxSizing: 'border-box',
 	fontSize: '14px',
 	overflow: 'auto',
@@ -209,9 +209,29 @@ console.log = (...items) => {
 	oldLog.apply(this, items)
 
 	items.forEach((item, i) => {
-		items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
+		if(typeof item == 'object'){
+			if(item.tagName){
+				let count = 0
+				let parent = item
+				while (parent.tagName != 'HTML'){
+					count++
+					parent=parent.parentNode
+				}
+				let tabs = ''
+				for (let i = 0; i < count; i++)
+					tabs+='\t'
+				items[i]=tabs+item.outerHTML
+			}
+			else{
+				items[i]=JSON.stringify(item, null, 2)
+			}
+		}
+		else{
+			items[i]=item
+		}
+		//items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
-	output.innerText += `\n\t\t${ items.join('') }\n`
+	output.innerText += `\n${ items.join('') }\n`
 	pre.scrollTo(0, pre.offsetHeight + 200)
 }
 
