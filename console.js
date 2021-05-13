@@ -132,29 +132,31 @@ clearConsoleBt.ontouch = () => {
 
 container.appendChild(clearConsoleBt)
 
+let h1 = document.createElement('h1')
+h1.innerText = 'CONSOLE'
+Object.assign(h1.style, {
+	background: '#0000004d',
+	margin: '0',
+	padding: '20px 20px 40px',
+	position: 'sticky',
+	left: '0',
+	borderBottom: '1px solid #0060ff',
+	fontFamily: 'sans-serif'
+})
+container.appendChild(h1)
+
 let pre = document.createElement('pre')
 pre.id = 'pre'
 Object.assign(pre.style, {
 	position: 'relative',
 	width: '100%',
 	margin: '0',
-	padding: '0 0 50px',
+	padding: '0 50px 50px 0',
 	boxSizing: 'border-box',
 	fontSize: '14px',
 	overflow: 'auto',
 })
 
-let h1 = document.createElement('h1')
-h1.innerText = 'CONSOLE'
-h1.style.background = '#0000004d'
-h1.style.margin = '0'
-h1.style.padding = '20px 20px 40px'
-pre.appendChild(h1)
-let hr = document.createElement('hr')
-hr.style.border = 'none'
-hr.style.borderBottom = '1px solid #0060ff'
-hr.style.margin = '0'
-pre.appendChild(hr)
 
 let output = document.createElement('code')
 output.id = 'output'
@@ -183,7 +185,7 @@ Object.assign(input.style, {
 input.onkeypress = callConsole
 container.addEventListener('dblclick', (e) => {
 	e.preventDefault()
-	output.scrollTo(0, output.offsetHeight + 999)
+	pre.scrollTo(0, pre.offsetHeight + 999)
 	input.focus()
 }, {passive: false})
 
@@ -209,8 +211,8 @@ console.log = (...items) => {
 	items.forEach((item, i) => {
 		items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
-	output.innerText += `\n\t${ items.join('') }\n`
-	output.scrollTo(0, output.offsetHeight + 200)
+	output.innerText += `\n\t\t${ items.join('') }\n`
+	pre.scrollTo(0, pre.offsetHeight + 200)
 }
 
 function consoleInput(data) {
@@ -235,9 +237,17 @@ function clearConsole() {
 }
 
 document.body.onresize = () => {
+	if (consoleBt.offsetLeft < 0) {
+		consoleBt.style.left = '0'
+		localStorage.setItem('consoleBt.x', consoleBt.style.left)
+	}
 	if (consoleBt.offsetLeft + consoleBt.offsetWidth > window.innerWidth) {
 		consoleBt.style.left = window.innerWidth - consoleBt.offsetWidth + 'px'
 		localStorage.setItem('consoleBt.x', consoleBt.style.left)
+	}
+	if(consoleBt.offsetTop < 0) {
+		consoleBt.style.top='0'
+		localStorage.setItem('consoleBt.y', consoleBt.style.top)
 	}
 	if (consoleBt.offsetTop + consoleBt.offsetHeight > window.innerHeight) {
 		consoleBt.style.top = window.innerHeight - consoleBt.offsetHeight + 'px'
