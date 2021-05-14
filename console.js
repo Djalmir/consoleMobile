@@ -4,17 +4,20 @@ Object.assign(consoleBt.style, {
 	left: '10px',
 	top: '10px',
 	borderRadius: '50%',
-	backgroundColor: '#00000080',
-	backgroundImage: "url('https://github.com/Djalmir/consoleMobile/blob/0.0.2/floatButton.png?raw=true')",
+	backgroundColor: '#0000004d',
 	boxShadow: 'inset 0 0 0 2px #0030cc',
 	backgroundSize: '100%',
+	backdropFilter: 'blur(10px)',
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
 	zIndex: '9999',
 	color: '#fff',
 	cursor: 'pointer',
-	userSelect: 'none'
+	userSelect: 'none',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center'
 })
 if (localStorage.getItem('consoleBt.x')) {
 	consoleBt.style.left = localStorage.getItem('consoleBt.x')
@@ -66,6 +69,13 @@ consoleBt.ontouch = () => {
 	consoleBt.onmouseup()
 	showHideConsole()
 }
+
+consoleBt.innerHTML = `
+	<svg viewBox="0 0 40 40" fill="transparent" stroke="#ccc" stroke-width="3.5" stroke-linecap="butt">
+		<polyline points="10 11, 18 17, 10 23"/>
+		<line x1="20" y1="26" x2="30" y2="26"/>
+	</svg>
+`
 
 document.body.appendChild(consoleBt)
 
