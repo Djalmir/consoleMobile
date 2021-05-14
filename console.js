@@ -167,63 +167,6 @@ Object.assign(pre.style, {
 	overflow: 'auto'
 })
 
-let style = document.createElement('style')
-if (style.styleSheet) {
-	style.styleSheet.cssText = `
-	#pre ::-webkit-scrollbar {
-		background: transparent;
-		width: 4px;
-		height: 0;
-	}
-	
-	#pre ::-webkit-scrollbar-track {
-		background: #612c7d4d;
-	}
-	
-	#pre ::-webkit-scrollbar-thumb {
-		background: #612c7d;
-		box-shadow: inset 0px 0px 5px #00000080;
-	}
-	
-	#pre ::selection {
-		background: #612c7d;
-		color: #fff;
-	}
-	`
-}
-else {
-	style.appendChild(document.createTextNode(`
-	#pre::-webkit-scrollbar {
-		background: transparent!important;
-		width: 4px;
-		height: 0;
-	}
-	
-	#pre::-webkit-scrollbar-track {
-		background: #0060ff4d;
-	}
-	
-	#pre::-webkit-scrollbar-thumb {
-		background: #0030cc;
-		box-shadow: inset 0px 0px 5px #00000080;
-	}
-	
-	#pre ::selection {
-		background: #0030cc;
-		color: #fff;
-	}
-	`))
-}
-document.getElementsByTagName('head')[0].appendChild(style)
-
-
-let output = document.createElement('code')
-output.id = 'output'
-Object.assign(output.style, {
-	tabSize: '20px'
-})
-
-pre.appendChild(output)
 container.appendChild(pre)
 
 let input = document.createElement('input')
@@ -301,7 +244,12 @@ console.log = (...items) => {
 			items[i] = item
 		// items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
-	output.innerText += `\n${ items.join('') }\n`
+	let output = document.createElement('code')
+	Object.assign(output.style, {
+		tabSize: '20px'
+	})
+	output.innerText += `\n${ items.join(' ') }\n`
+	pre.appendChild(output)
 	pre.scrollTo(0, pre.offsetHeight + 200)
 }
 
@@ -344,3 +292,142 @@ document.body.onresize = () => {
 		localStorage.setItem('consoleBt.y', consoleBt.style.top)
 	}
 }
+
+window.onerror = (msg, url, lineNo, columnNo, error) => {
+	let errorDiv = document.createElement('div')
+	errorDiv.classList.add('errorDiv')
+
+	let b = document.createElement('b')
+	b.classList.add('error-b')
+	b.innerText = msg
+	errorDiv.appendChild(b)
+
+	let urlSpan = document.createElement('span')
+	urlSpan.classList.add('urlSpan')
+
+	let a = document.createElement('a')
+	a.href = url
+	a.target = '_blank'
+	a.innerText = url
+	a.classList.add('error-a')
+	urlSpan.appendChild(a)
+
+	let span = document.createElement('span')
+	span.classList.add('error-lineCol-span')
+	span.innerText = `Linha: ${ lineNo }	Coluna: ${ columnNo }`
+	urlSpan.appendChild(span)
+
+	errorDiv.appendChild(urlSpan)
+
+	pre.appendChild(errorDiv)
+	// console.log(errorDiv)
+}
+
+let style = document.createElement('style')
+if (style.styleSheet) {
+	style.styleSheet.cssText = `
+	#pre ::-webkit-scrollbar {
+		background: transparent;
+		width: 4px;
+		height: 0;
+	}
+	
+	#pre ::-webkit-scrollbar-track {
+		background: #612c7d4d;
+	}
+	
+	#pre ::-webkit-scrollbar-thumb {
+		background: #612c7d;
+		box-shadow: inset 0px 0px 5px #00000080;
+	}
+	
+	#pre ::selection {
+		background: #612c7d;
+		color: #fff;
+	}
+
+	.errorDiv {
+		background: #ff60003d;
+		margin-top: 15px;
+		padding: 20px;
+		border-radius: .5rem;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.error-b {
+		font-weight: bolder;
+		font-size: 18px;
+		color: #ff6000;
+	}
+
+	.urlSpan {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-itens: center;
+		margin-top: 8px;
+	}
+
+	.error-a {
+		color: #0060ff;
+		font-size: 16px;
+		margin: 0 8px 8px 0;
+	}
+
+	`
+}
+else {
+	style.appendChild(document.createTextNode(`
+	#pre::-webkit-scrollbar {
+		background: transparent!important;
+		width: 4px;
+		height: 0;
+	}
+	
+	#pre::-webkit-scrollbar-track {
+		background: #0060ff4d;
+	}
+	
+	#pre::-webkit-scrollbar-thumb {
+		background: #0030cc;
+		box-shadow: inset 0px 0px 5px #00000080;
+	}
+	
+	#pre ::selection {
+		background: #0030cc;
+		color: #fff;
+	}
+
+	.errorDiv {
+		background: #ff60003d;
+		margin-top: 15px;
+		padding: 20px;
+		border-radius: .5rem;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.error-b {
+		font-weight: bolder;
+		font-size: 18px;
+		color: #ff6000;
+	}
+
+	.urlSpan {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-itens: center;
+		margin-top: 8px;
+	}
+
+	.error-a {
+		color: #0060ff;
+		font-size: 16px;
+		margin: 0 8px 8px 0;
+	}
+
+	`))
+}
+document.getElementsByTagName('head')[0].appendChild(style)
