@@ -81,18 +81,19 @@ document.body.appendChild(consoleBt)
 let container = document.createElement('div')
 Object.assign(container.style, {
 	position: 'fixed',
-	top: '-110%',
+	top: '0',
 	left: '0',
 	width: '100%',
 	height: '100%',
-	display: 'flex',
+	display: 'none',
 	flexDirection: 'column',
 	backgroundColor: '#000000cc',
 	backdropFilter: 'blur(10px)',
-	transition: 'top .2s',
 	color: '#fff',
 	boxSizing: 'border-box',
-	zIndex: '9998'
+	zIndex: '9998',
+	transition: '.2s linear',
+	transform: 'scale(0)'
 })
 
 let clearConsoleBt = document.createElement('div')
@@ -193,14 +194,28 @@ container.appendChild(input)
 document.body.appendChild(container)
 
 let showingConsole = false
-function showHideConsole() {
+let h = ['left', 'center', 'right']
+let v = ['top', 'center', 'bottom']
+async function showHideConsole() {
+	container.style.transformOrigin=await`${h[Math.floor(Math.random()*3)]} ${v[Math.floor(Math.random()*3)]}`
+	//console.log(container.style.transformOrigin)
 	showingConsole = !showingConsole
 	if (showingConsole) {
-		container.style.top = '0'
+		container.style.display = 'flex'
+		setTimeout(function() {
+			container.style.transform='scale(1)'
+		}, 10)
+		
 	}
 	else{
-		container.style.top = '-110%'
+		container.style.transform='scale(0)'
+		container.addEventListener('transitionend',hideConsole)
 	}
+}
+
+function hideConsole(){
+	container.style.display = 'none'
+	container.removeEventListener('transitionend', hideConsole)
 }
 
 let oldLog = console.log
