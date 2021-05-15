@@ -4,9 +4,8 @@ Object.assign(consoleBt.style, {
 	left: '10px',
 	top: '10px',
 	borderRadius: '50%',
-	backgroundColor: '#0000004d',
-	boxShadow: 'inset 0 0 0 2px #0030cc',
-	backgroundSize: '100%',
+	background: 'radial-gradient(#0000004d 40%, #0060ff)',
+	//border: '2px solid #0060ff',
 	backdropFilter: 'blur(10px)',
 	width: '40px',
 	height: '40px',
@@ -82,7 +81,7 @@ document.body.appendChild(consoleBt)
 let container = document.createElement('div')
 Object.assign(container.style, {
 	position: 'fixed',
-	top: '-120vh',
+	top: '-110%',
 	left: '0',
 	width: '100%',
 	height: '100%',
@@ -90,7 +89,7 @@ Object.assign(container.style, {
 	flexDirection: 'column',
 	backgroundColor: '#000000cc',
 	backdropFilter: 'blur(10px)',
-	transition: 'top .2s linear',
+	transition: 'top .2s',
 	color: '#fff',
 	boxSizing: 'border-box',
 	zIndex: '9998'
@@ -102,21 +101,20 @@ Object.assign(clearConsoleBt.style, {
 	right: '10px',
 	top: '10px',
 	borderRadius: '50%',
-	backgroundColor: '#ff600080',
-	boxShadow: 'inset 0 0 10px #000000dd',
+	background: 'radial-gradient(#0000004d 40%, #ff6000)',
+	backdropFilter: 'blur(10px)',
+	//border: '2px solid #ff60003d',
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
 	zIndex: '9999',
-	color: '#fff',
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	fontFamily: 'sans-serif',
 	cursor: 'pointer',
 	userSelect: 'none'
 })
-clearConsoleBt.innerHTML = '<b>&#X1F5D1</b>'
+clearConsoleBt.innerHTML = '&#X1F5D1'
 
 clearConsoleBt.onmousedown = () => {
 	Object.assign(clearConsoleBt.style, {
@@ -142,29 +140,30 @@ clearConsoleBt.ontouch = () => {
 
 container.appendChild(clearConsoleBt)
 
-let h1 = document.createElement('h1')
-h1.innerText = 'CONSOLE'
-Object.assign(h1.style, {
-	background: '#0000004d',
-	margin: '0',
-	padding: '20px 12px 40px',
-	position: 'sticky',
-	left: '0',
-	borderBottom: '1px solid #0060ff',
-	fontFamily: 'sans-serif'
-})
-container.appendChild(h1)
-
 let pre = document.createElement('pre')
 pre.id = 'pre'
 Object.assign(pre.style, {
 	width: '100%',
 	margin: '0',
-	padding: '0 50px 50px 12px',
+	padding: '0 0 50px 0',
 	boxSizing: 'border-box',
 	fontSize: '14px',
 	overflow: 'auto'
 })
+
+let h1 = document.createElement('h1')
+h1.innerText = 'CONSOLE'
+Object.assign(h1.style, {
+	background: '#0000004d',
+	margin: '0 0 20px',
+	width: '100%',
+	padding: '10px 12px 20px',
+	boxSizing: 'border-box',
+	left: '0',
+	borderBottom: '1px solid #0060ff',
+	fontFamily: 'courier sans-serif'
+})
+pre.appendChild(h1)
 
 container.appendChild(pre)
 
@@ -199,8 +198,9 @@ function showHideConsole() {
 	if (showingConsole) {
 		container.style.top = '0'
 	}
-	else
-		container.style.top = '-120vh'
+	else{
+		container.style.top = '-110%'
+	}
 }
 
 let oldLog = console.log
@@ -251,11 +251,15 @@ console.log = (...items) => {
 }
 
 function consoleInput(data) {
-	let text = document.createElement('div')
+	let text = document.createElement('p')
 	text.innerText = data
 	Object.assign(text.style, {
-		margin: '30px 0 0 20px',
-		color:'#3582fd'
+		margin: '30px auto 0',
+		padding: '0 12px',
+		boxSizing: 'border-box',
+		color:'#3582fd',
+		width: '95%',
+		overflow: 'auto'
 	})
 	pre.appendChild(text)
 	try {
@@ -278,7 +282,7 @@ function consoleInput(data) {
 }
 
 function callConsole(e) {
-	if (e.key == 'Enter') {
+	if (e.key == 'Enter' && input.value.trim()!='') {
 		consoleInput(input.value)
 		input.value = ''
 	}
@@ -286,6 +290,7 @@ function callConsole(e) {
 
 function clearConsole() {
 	pre.innerHTML = ''
+	pre.appendChild(h1)
 }
 
 document.body.onresize = () => {
@@ -339,20 +344,20 @@ window.onerror = (msg, url, lineNo, columnNo, error) => {
 
 let style = document.createElement('style')
 style.appendChild(document.createTextNode(`
-	#pre::-webkit-scrollbar {
-		background: transparent!important;
-		width: 4px;
-		height: 0;
-	}
+	// #pre::-webkit-scrollbar {
+	// 	background: transparent!important;
+	// 	width: 0;
+	// 	height: 0;
+	// }
 	
-	#pre::-webkit-scrollbar-track {
-		background: #0060ff4d;
-	}
+	// #pre::-webkit-scrollbar-track {
+	// 	background: #0060ff4d;
+	// }
 	
-	#pre::-webkit-scrollbar-thumb {
-		background: #0030cc;
-		box-shadow: inset 0px 0px 5px #00000080;
-	}
+	// #pre::-webkit-scrollbar-thumb {
+	// 	background: #0030cc;
+	// 	box-shadow: inset 0px 0px 5px #00000080;
+	// }
 	
 	#pre ::selection {
 		background: #0030cc;
@@ -362,43 +367,45 @@ style.appendChild(document.createTextNode(`
 	.output{
 		tab-size: 20px;
 		background: #0060ff2d;
-		margin-top: 4px;
+		margin: 2px auto;
 		padding: 12px 20px;
+		box-sizing: border-box;
 		border-radius: .2rem;
-		width: 100%;
+		width: 95%;
 		overflow-x: auto;
-		box-shadow: inset 0 0 5px #0000008d;
+		border: 1px solid #0000004d;
 	}
 
 	.errorDiv {
 		background: #ff60003d;
-		margin-top: 15px;
+		margin: 2px auto;
 		padding: 20px;
+		box-sizing: border-box;
 		border-radius: .2rem;
-		width: 100%;
+		width: 95%;
 		overflow-x: auto;
-		box-shadow: inset 0 0 5px #0000008d;
+		border: 1px solid #0000004d;
 	}
 
-	.output::-webkit-scrollbar,
-	.errorDiv::-webkit-scrollbar {
-		background: transparent!important;
-		width: 0;
-		height: 4px;
-	}
+	// .output::-webkit-scrollbar,
+	// .errorDiv::-webkit-scrollbar {
+	// 	background: transparent!important;
+	// 	width: 0;
+	// 	height: 0;
+	// }
 	
-	.output::-webkit-scrollbar-track,
-	.errorDiv::-webkit-scrollbar-track {
-		background: #0060ff4d;
-		border-radius: 0 0 1rem 1rem;
-	}
+	// .output::-webkit-scrollbar-track,
+	// .errorDiv::-webkit-scrollbar-track {
+	// 	background: #0060ff4d;
+	// 	border-radius: 0 0 1rem 1rem;
+	// }
 	
-	.output::-webkit-scrollbar-thumb,
-	.errorDiv::-webkit-scrollbar-thumb {
-		background: #0030cc;
-		box-shadow: inset 0px 0px 5px #00000080;
-		border-radius: 0 0 1rem 1rem;
-	}
+	// .output::-webkit-scrollbar-thumb,
+	// .errorDiv::-webkit-scrollbar-thumb {
+	// 	background: #0030cc;
+	// 	box-shadow: inset 0px 0px 5px #00000080;
+	// 	border-radius: 0 0 1rem 1rem;
+	// }
 	
 	.output ::selection,
 	.errorDiv ::selection {
