@@ -92,7 +92,7 @@ Object.assign(container.style, {
 	color: '#fff',
 	boxSizing: 'border-box',
 	zIndex: '9998',
-	transition: '.2s linear',
+	transition: '.1s linear',
 	transform: 'scale(0)'
 })
 
@@ -196,11 +196,10 @@ document.body.appendChild(container)
 let showingConsole = false
 let h = ['left', 'center', 'right']
 let v = ['top', 'center', 'bottom']
-async function showHideConsole() {
-	container.style.transformOrigin=await`${h[Math.floor(Math.random()*3)]} ${v[Math.floor(Math.random()*3)]}`
-	//console.log(container.style.transformOrigin)
+function showHideConsole() {
 	showingConsole = !showingConsole
 	if (showingConsole) {
+		container.style.transformOrigin=`${h[Math.floor(Math.random()*3)]} ${v[Math.floor(Math.random()*3)]}`
 		container.style.display = 'flex'
 		setTimeout(function() {
 			container.style.transform='scale(1)'
