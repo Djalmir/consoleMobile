@@ -2,7 +2,7 @@ let consoleBt = document.createElement('div')
 Object.assign(consoleBt.style, {
 	position: 'fixed',
 	left: '10px',
-	top: '10px',
+	top: 'calc(100% - 50px)',
 	borderRadius: '50%',
 	background: 'radial-gradient(#0000004d 40%, #0060ff)',
 	//border: '2px solid #0060ff',
@@ -146,7 +146,7 @@ pre.id = 'pre'
 Object.assign(pre.style, {
 	width: '100%',
 	margin: '0',
-	padding: '0 0 50px 0',
+	padding: '0',
 	boxSizing: 'border-box',
 	fontSize: '14px',
 	overflow: 'auto'
@@ -162,35 +162,93 @@ Object.assign(h1.style, {
 	boxSizing: 'border-box',
 	left: '0',
 	borderBottom: '1px solid #0060ff',
-	fontFamily: 'courier sans-serif'
+	fontFamily: "'Ubuntu Mono', monospace"
 })
 pre.appendChild(h1)
 
-container.appendChild(pre)
-
-let input = document.createElement('input')
-input.type = 'text'
-input.autocomplete = 'off'
+let input = document.createElement('textarea')
 input.id = 'input'
+input.rows = 1
 Object.assign(input.style, {
 	width: '100%',
-	backgroundColor: '#0000004d',
+	minHeight: '60px',
+	background: 'linear-gradient(to bottom, #0000004d, transparent)',
 	border: 'none',
 	outline: 'none',
 	padding: '8px 12px',
 	boxSizing: 'border-box',
 	fontSize: '16px',
 	color: '#3582fd',
-	borderBottom: '1px solid #0060ff'
+	marginTop: '50px',
+	borderTop: '1px solid #0060ff',
+	borderBottom: '1px solid #0060ff',
+	fontFamily: "'Ubuntu Mono', monospace",
+	resize: 'none',
+	tabSize: '20px'
 })
-input.onkeypress = callConsole
+
+input.addEventListener('input', ()=>{
+	input.rows = Math.floor(input.scrollHeight/17)
+})
+
 container.addEventListener('dblclick', (e) => {
 	e.preventDefault()
-	pre.scrollTo(0, pre.offsetHeight + 999)
+	pre.scrollTo(0, pre.scrollHeight)
 	input.focus()
 }, {passive: false})
 
-container.appendChild(input)
+
+
+let sendBt = document.createElement('div')
+Object.assign(sendBt.style, {
+	position: 'absolute',
+	right: '10px',
+	bottom: '10px',
+	padding: '0',
+	borderRadius: '50%',
+	background: 'radial-gradient(#0000004d 40%, #00ff00)',
+	backdropFilter: 'blur(10px)',
+	//border: '2px solid #ff60003d',
+	width: '40px',
+	height: '40px',
+	webkitTapHighlightColor: 'transparent',
+	zIndex: '9999',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	cursor: 'pointer',
+	userSelect: 'none'
+})
+sendBt.innerHTML = '&#x2714'
+
+sendBt.onmousedown = () => {
+	Object.assign(sendBt.style, {
+		transform: 'scale(.95)'
+	})
+}
+sendBt.ontouchstart = sendBt.onmousedown
+
+sendBt.onmouseup = () => {
+	Object.assign(sendBt.style, {
+		transform: 'scale(1)'
+	})
+}
+sendBt.ontouchcancel = sendBt.onmouseup
+sendBt.ontouchend = sendBt.onmouseup
+sendBt.onmouseleave = sendBt.onmouseup
+
+sendBt.onclick = () => {callConsole()}
+sendBt.ontouch = () => {
+	sendBt.onmouseup()
+	callConsole()
+}
+
+container.appendChild(sendBt)
+
+
+
+pre.appendChild(input)
+container.appendChild(pre)
 document.body.appendChild(container)
 
 let showingConsole = false
@@ -260,8 +318,8 @@ console.log = (...items) => {
 	let output = document.createElement('div')
 	output.classList.add('output')
 	output.innerText += `${ items.join(' ') }\n`
-	pre.appendChild(output)
-	pre.scrollTo(0, pre.offsetHeight + 200)
+	pre.insertBefore(output, input)
+	pre.scrollTo(0, pre.scrollHeight)
 }
 
 function consoleInput(data) {
@@ -275,7 +333,7 @@ function consoleInput(data) {
 		width: '95%',
 		overflow: 'auto'
 	})
-	pre.appendChild(text)
+	pre.insertBefore(text, input)
 	try {
 		console.log(eval(data))
 	}
@@ -288,23 +346,23 @@ function consoleInput(data) {
 		span.innerText = e.stack + ' '
 		errorDiv.appendChild(span)
 
-		pre.appendChild(errorDiv)
+		pre.insertBefore(errorDiv, input)
 	}
-	finally{
-		pre.scrollTo(0, pre.offsetHeight + 200)
-	}
+	pre.scrollTo(0, pre.scrollHeight)
 }
 
 function callConsole(e) {
-	if (e.key == 'Enter' && input.value.trim()!='') {
+	if (input.value.trim()!='') {
 		consoleInput(input.value)
 		input.value = ''
+		input.rows = 1
 	}
 }
 
 function clearConsole() {
 	pre.innerHTML = ''
 	pre.appendChild(h1)
+	pre.appendChild(input)
 }
 
 document.body.onresize = () => {
@@ -352,29 +410,17 @@ window.onerror = (msg, url, lineNo, columnNo, error) => {
 
 	errorDiv.appendChild(urlSpan)
 
-	pre.appendChild(errorDiv)
-	pre.scrollTo(0, pre.offsetHeight + 200)
+	pre.insertBefore(errorDiv, input)
+	pre.scrollTo(0, pre.scrollHeight)
 }
 
 let style = document.createElement('style')
 style.appendChild(document.createTextNode(`
-	// #pre::-webkit-scrollbar {
-	// 	background: transparent!important;
-	// 	width: 0;
-	// 	height: 0;
-	// }
-	
-	// #pre::-webkit-scrollbar-track {
-	// 	background: #0060ff4d;
-	// }
-	
-	// #pre::-webkit-scrollbar-thumb {
-	// 	background: #0030cc;
-	// 	box-shadow: inset 0px 0px 5px #00000080;
-	// }
-	
+	@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
+
 	#pre ::selection {
 		background: #0030cc;
+		font-family: 'Ubuntu Mono', monospace;
 		color: #fff;
 	}
 
@@ -388,6 +434,7 @@ style.appendChild(document.createTextNode(`
 		width: 95%;
 		overflow-x: auto;
 		border: 1px solid #0000004d;
+		font-family: 'Ubuntu Mono', monospace;
 	}
 
 	.errorDiv {
@@ -399,28 +446,9 @@ style.appendChild(document.createTextNode(`
 		width: 95%;
 		overflow-x: auto;
 		border: 1px solid #0000004d;
+		font-family: 'Ubuntu Mono', monospace;
 	}
 
-	// .output::-webkit-scrollbar,
-	// .errorDiv::-webkit-scrollbar {
-	// 	background: transparent!important;
-	// 	width: 0;
-	// 	height: 0;
-	// }
-	
-	// .output::-webkit-scrollbar-track,
-	// .errorDiv::-webkit-scrollbar-track {
-	// 	background: #0060ff4d;
-	// 	border-radius: 0 0 1rem 1rem;
-	// }
-	
-	// .output::-webkit-scrollbar-thumb,
-	// .errorDiv::-webkit-scrollbar-thumb {
-	// 	background: #0030cc;
-	// 	box-shadow: inset 0px 0px 5px #00000080;
-	// 	border-radius: 0 0 1rem 1rem;
-	// }
-	
 	.output ::selection,
 	.errorDiv ::selection {
 		background: #0030cc;
