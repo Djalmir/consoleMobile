@@ -4,14 +4,13 @@ Object.assign(consoleBt.style, {
 	left: '10px',
 	top: 'calc(100% - 50px)',
 	borderRadius: '50%',
-	background: 'radial-gradient(#0000004d 40%, #0060ff)',
+	background: 'radial-gradient(#0000008d 50%, #0060ff)',
 	//border: '2px solid #0060ff',
 	backdropFilter: 'blur(10px)',
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
 	zIndex: '9999',
-	color: '#fff',
 	cursor: 'pointer',
 	userSelect: 'none',
 	display: 'flex',
@@ -31,28 +30,6 @@ consoleBt.onmousedown = () => {
 	})
 }
 consoleBt.ontouchstart = consoleBt.onmousedown
-
-document.onmousemove = (e) => {
-	if (movingBt) {
-		consoleBt.style.left = e.clientX - 20 + 'px',
-			consoleBt.style.top = e.clientY - 20 + 'px'
-	}
-}
-document.addEventListener('touchmove', (e) => {
-	if (movingBt) {
-		e.preventDefault()
-		consoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
-			consoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
-	}
-}, {passive: false})
-
-document.onmouseup = () => {
-	movingBt = false
-	localStorage.setItem('consoleBt.x', consoleBt.style.left)
-	localStorage.setItem('consoleBt.y', consoleBt.style.top)
-}
-
-document.ontouchend = document.onmouseup
 
 consoleBt.onmouseup = () => {
 	Object.assign(consoleBt.style, {
@@ -102,13 +79,12 @@ Object.assign(clearConsoleBt.style, {
 	right: '10px',
 	top: '10px',
 	borderRadius: '50%',
-	background: 'radial-gradient(#0000004d 40%, #ff6000)',
+	background: 'radial-gradient(#0000004d 50%, #ff6000)',
 	backdropFilter: 'blur(10px)',
 	//border: '2px solid #ff60003d',
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
-	zIndex: '9999',
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
@@ -117,7 +93,14 @@ Object.assign(clearConsoleBt.style, {
 })
 clearConsoleBt.innerHTML = '&#X1F5D1'
 
+if (localStorage.getItem('clearConsoleBt.x')) {
+	clearConsoleBt.style.left = localStorage.getItem('clearConsoleBt.x')
+	clearConsoleBt.style.top = localStorage.getItem('clearConsoleBt.y')
+}
+
+let movingClearConsoleBt = false
 clearConsoleBt.onmousedown = () => {
+	movingClearConsoleBt = true
 	Object.assign(clearConsoleBt.style, {
 		transform: 'scale(.95)'
 	})
@@ -142,7 +125,7 @@ clearConsoleBt.ontouch = () => {
 container.appendChild(clearConsoleBt)
 
 let pre = document.createElement('pre')
-pre.id = 'pre'
+pre.id = 'consoleMobile_pre'
 Object.assign(pre.style, {
 	width: '100%',
 	margin: '0',
@@ -167,7 +150,6 @@ Object.assign(h1.style, {
 pre.appendChild(h1)
 
 let input = document.createElement('textarea')
-input.id = 'input'
 input.rows = 1
 Object.assign(input.style, {
 	width: '100%',
@@ -187,8 +169,8 @@ Object.assign(input.style, {
 	tabSize: '20px'
 })
 
-input.addEventListener('input', ()=>{
-	input.rows = Math.floor(input.scrollHeight/17)
+input.addEventListener('input', () => {
+	input.rows = Math.floor(input.scrollHeight / 17)
 })
 
 container.addEventListener('dblclick', (e) => {
@@ -206,22 +188,27 @@ Object.assign(sendBt.style, {
 	bottom: '10px',
 	padding: '0',
 	borderRadius: '50%',
-	background: 'radial-gradient(#0000004d 40%, #00ff00)',
+	background: 'radial-gradient(#0000004d 50%, #00ff00)',
 	backdropFilter: 'blur(10px)',
 	//border: '2px solid #ff60003d',
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
-	zIndex: '9999',
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
 	cursor: 'pointer',
 	userSelect: 'none'
 })
-sendBt.innerHTML = '&#x2714'
 
+if (localStorage.getItem('sendBt.x')) {
+	sendBt.style.left = localStorage.getItem('sendBt.x')
+	sendBt.style.top = localStorage.getItem('sendBt.y')
+}
+
+let movingSendBt = false
 sendBt.onmousedown = () => {
+	movingSendBt = true
 	Object.assign(sendBt.style, {
 		transform: 'scale(.95)'
 	})
@@ -243,6 +230,12 @@ sendBt.ontouch = () => {
 	callConsole()
 }
 
+sendBt.innerHTML = `
+	<svg viewBox="0 0 40 40" fill="transparent" stroke="#ccc" stroke-width="4.5" stroke-linecap="butt">
+		<polyline points="9 18, 17 27, 31 13"/>
+	</svg>
+`
+
 container.appendChild(sendBt)
 
 
@@ -257,20 +250,20 @@ let v = ['top', 'center', 'bottom']
 function showHideConsole() {
 	showingConsole = !showingConsole
 	if (showingConsole) {
-		container.style.transformOrigin=`${h[Math.floor(Math.random()*3)]} ${v[Math.floor(Math.random()*3)]}`
+		container.style.transformOrigin = `${ h[Math.floor(Math.random() * 3)] } ${ v[Math.floor(Math.random() * 3)] }`
 		container.style.display = 'flex'
-		setTimeout(function() {
-			container.style.transform='scale(1)'
+		setTimeout(function () {
+			container.style.transform = 'scale(1)'
 		}, 10)
-		
+
 	}
-	else{
-		container.style.transform='scale(0)'
-		container.addEventListener('transitionend',hideConsole)
+	else {
+		container.style.transform = 'scale(0)'
+		container.addEventListener('transitionend', hideConsole)
 	}
 }
 
-function hideConsole(){
+function hideConsole() {
 	container.style.display = 'none'
 	container.removeEventListener('transitionend', hideConsole)
 }
@@ -316,7 +309,7 @@ console.log = (...items) => {
 		// items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
 	let output = document.createElement('div')
-	output.classList.add('output')
+	output.classList.add('consoleMobile_output')
 	output.innerText += `${ items.join(' ') }\n`
 	pre.insertBefore(output, input)
 	pre.scrollTo(0, pre.scrollHeight)
@@ -329,7 +322,7 @@ function consoleInput(data) {
 		margin: '30px auto 0',
 		padding: '0 12px',
 		boxSizing: 'border-box',
-		color:'#3582fd',
+		color: '#3582fd',
 		width: '95%',
 		overflow: 'auto'
 	})
@@ -339,10 +332,10 @@ function consoleInput(data) {
 	}
 	catch (e) {
 		let errorDiv = document.createElement('div')
-		errorDiv.classList.add('errorDiv')
+		errorDiv.classList.add('consoleMobile_errorDiv')
 
 		let span = document.createElement('span')
-		span.classList.add('error-span')
+		span.classList.add('consoleMobile_error-span')
 		span.innerText = e.stack + ' '
 		errorDiv.appendChild(span)
 
@@ -352,7 +345,7 @@ function consoleInput(data) {
 }
 
 function callConsole(e) {
-	if (input.value.trim()!='') {
+	if (input.value.trim() != '') {
 		consoleInput(input.value)
 		input.value = ''
 		input.rows = 1
@@ -382,29 +375,63 @@ document.body.onresize = () => {
 		consoleBt.style.top = window.innerHeight - consoleBt.offsetHeight + 'px'
 		localStorage.setItem('consoleBt.y', consoleBt.style.top)
 	}
+
+	if (clearConsoleBt.offsetLeft < 0) {
+		clearConsoleBt.style.left = '0'
+		localStorage.setItem('clearConsoleBt.x', clearConsoleBt.style.left)
+	}
+	if (clearConsoleBt.offsetLeft + clearConsoleBt.offsetWidth > window.innerWidth) {
+		clearConsoleBt.style.left = window.innerWidth - clearConsoleBt.offsetWidth + 'px'
+		localStorage.setItem('clearConsoleBt.x', clearConsoleBt.style.left)
+	}
+	if (clearConsoleBt.offsetTop < 0) {
+		clearConsoleBt.style.top = '0'
+		localStorage.setItem('clearConsoleBt.y', clearConsoleBt.style.top)
+	}
+	if (clearConsoleBt.offsetTop + clearConsoleBt.offsetHeight > window.innerHeight) {
+		clearConsoleBt.style.top = window.innerHeight - clearConsoleBt.offsetHeight + 'px'
+		localStorage.setItem('clearConsoleBt.y', clearConsoleBt.style.top)
+	}
+
+	if (sendBt.offsetLeft < 0) {
+		sendBt.style.left = '0'
+		localStorage.setItem('sendBt.x', sendBt.style.left)
+	}
+	if (sendBt.offsetLeft + sendBt.offsetWidth > window.innerWidth) {
+		sendBt.style.left = window.innerWidth - sendBt.offsetWidth + 'px'
+		localStorage.setItem('sendBt.x', sendBt.style.left)
+	}
+	if (sendBt.offsetTop < 0) {
+		sendBt.style.top = '0'
+		localStorage.setItem('sendBt.y', sendBt.style.top)
+	}
+	if (sendBt.offsetTop + sendBt.offsetHeight > window.innerHeight) {
+		sendBt.style.top = window.innerHeight - sendBt.offsetHeight + 'px'
+		localStorage.setItem('sendBt.y', sendBt.style.top)
+	}
 }
 
 window.onerror = (msg, url, lineNo, columnNo, error) => {
 	let errorDiv = document.createElement('div')
-	errorDiv.classList.add('errorDiv')
+	errorDiv.classList.add('consoleMobile_errorDiv')
 
 	let b = document.createElement('b')
-	b.classList.add('error-b')
+	b.classList.add('consoleMobile_error-b')
 	b.innerText = msg + ' '
 	errorDiv.appendChild(b)
 
 	let urlSpan = document.createElement('span')
-	urlSpan.classList.add('urlSpan')
+	urlSpan.classList.add('consoleMobile_urlSpan')
 
 	let a = document.createElement('a')
 	a.href = url
 	a.target = '_blank'
 	a.innerText = url
-	a.classList.add('error-a')
+	a.classList.add('consoleMobile_error-a')
 	urlSpan.appendChild(a)
 
 	let span = document.createElement('span')
-	span.classList.add('error-lineCol-span')
+	span.classList.add('consoleMobile_error-lineCol-span')
 	span.innerText = `Linha: ${ lineNo }	Coluna: ${ columnNo }`
 	urlSpan.appendChild(span)
 
@@ -414,17 +441,69 @@ window.onerror = (msg, url, lineNo, columnNo, error) => {
 	pre.scrollTo(0, pre.scrollHeight)
 }
 
+document.onmousemove = (e) => {
+	if (movingBt) {
+		consoleBt.style.left = e.clientX - 20 + 'px',
+			consoleBt.style.top = e.clientY - 20 + 'px'
+	}
+	if (movingClearConsoleBt) {
+		clearConsoleBt.style.left = e.clientX - 20 + 'px',
+			clearConsoleBt.style.top = e.clientY - 20 + 'px'
+	}
+	if (movingSendBt) {
+		sendBt.style.left = e.clientX - 20 + 'px',
+			sendBt.style.top = e.clientY - 20 + 'px'
+	}
+}
+document.addEventListener('touchmove', (e) => {
+	if (movingBt) {
+		e.preventDefault()
+		consoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
+			consoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+	}
+	if (movingClearConsoleBt) {
+		e.preventDefault()
+		clearConsoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
+			clearConsoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+	}
+	if (movingSendBt) {
+		e.preventDefault()
+		sendBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
+			sendBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+	}
+}, {passive: false})
+
+document.onmouseup = () => {
+	if (movingBt) {
+		movingBt = false
+		localStorage.setItem('consoleBt.x', consoleBt.style.left)
+		localStorage.setItem('consoleBt.y', consoleBt.style.top)
+	}
+	if (movingClearConsoleBt) {
+		movingClearConsoleBt = false
+		localStorage.setItem('clearConsoleBt.x', clearConsoleBt.style.left)
+		localStorage.setItem('clearConsoleBt.y', clearConsoleBt.style.top)
+	}
+	if (movingSendBt) {
+		movingSendBt = false
+		localStorage.setItem('sendBt.x', sendBt.style.left)
+		localStorage.setItem('sendBt.y', sendBt.style.top)
+	}
+}
+
+document.ontouchend = document.onmouseup
+
 let style = document.createElement('style')
 style.appendChild(document.createTextNode(`
 	@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
 
-	#pre ::selection {
+	#consoleMobile_pre ::selection {
 		background: #0030cc;
 		font-family: 'Ubuntu Mono', monospace;
 		color: #fff;
 	}
 
-	.output{
+	.consoleMobile_output{
 		tab-size: 20px;
 		background: #0060ff2d;
 		margin: 2px auto;
@@ -437,7 +516,7 @@ style.appendChild(document.createTextNode(`
 		font-family: 'Ubuntu Mono', monospace;
 	}
 
-	.errorDiv {
+	.consoleMobile_errorDiv {
 		background: #ff60003d;
 		margin: 2px auto;
 		padding: 20px;
@@ -449,19 +528,19 @@ style.appendChild(document.createTextNode(`
 		font-family: 'Ubuntu Mono', monospace;
 	}
 
-	.output ::selection,
-	.errorDiv ::selection {
+	.consoleMobile_output ::selection,
+	.consoleMobile_errorDiv ::selection {
 		background: #0030cc;
 		color: #fff;
 	}
 
-	.error-b {
+	.consoleMobile_error-b {
 		font-weight: bolder;
 		font-size: 18px;
 		color: #ff6000;
 	}
 
-	.urlSpan {
+	.consoleMobile_urlSpan {
 		display: flex;
 		justify-content: space-between;
 		flex-wrap: wrap;
@@ -469,7 +548,7 @@ style.appendChild(document.createTextNode(`
 		margin-top: 8px;
 	}
 
-	.error-a {
+	.consoleMobile_error-a {
 		color: #0060ff;
 		font-size: 16px;
 		margin: 0 8px 8px 0;
