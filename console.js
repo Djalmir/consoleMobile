@@ -1,5 +1,5 @@
-let consoleBt = document.createElement('div')
-Object.assign(consoleBt.style, {
+let cM_consoleBt = document.createElement('div')
+Object.assign(cM_consoleBt.style, {
 	position: 'fixed',
 	left: '10px',
 	top: 'calc(100% - 50px)',
@@ -17,46 +17,46 @@ Object.assign(consoleBt.style, {
 	justifyContent: 'center',
 	alignItems: 'center'
 })
-if (localStorage.getItem('consoleBt.x')) {
-	consoleBt.style.left = localStorage.getItem('consoleBt.x')
-	consoleBt.style.top = localStorage.getItem('consoleBt.y')
+if (localStorage.getItem('cM_consoleBt.x')) {
+	cM_consoleBt.style.left = localStorage.getItem('cM_consoleBt.x')
+	cM_consoleBt.style.top = localStorage.getItem('cM_consoleBt.y')
 }
 
-let movingBt = false
-consoleBt.onmousedown = () => {
-	movingBt = true
-	Object.assign(consoleBt.style, {
+let cM_movingBt = false
+cM_consoleBt.onmousedown = () => {
+	cM_movingBt = true
+	Object.assign(cM_consoleBt.style, {
 		transform: 'scale(.95)'
 	})
 }
-consoleBt.ontouchstart = consoleBt.onmousedown
+cM_consoleBt.ontouchstart = cM_consoleBt.onmousedown
 
-consoleBt.onmouseup = () => {
-	Object.assign(consoleBt.style, {
+cM_consoleBt.onmouseup = () => {
+	Object.assign(cM_consoleBt.style, {
 		transform: 'scale(1)'
 	})
 }
-consoleBt.ontouchcancel = consoleBt.onmouseup
-consoleBt.ontouchend = consoleBt.onmouseup
-consoleBt.onmouseleave = consoleBt.onmouseup
+cM_consoleBt.ontouchcancel = cM_consoleBt.onmouseup
+cM_consoleBt.ontouchend = cM_consoleBt.onmouseup
+cM_consoleBt.onmouseleave = cM_consoleBt.onmouseup
 
-consoleBt.onclick = () => {showHideConsole()}
-consoleBt.ontouch = () => {
-	consoleBt.onmouseup()
-	showHideConsole()
+cM_consoleBt.onclick = () => {cM_showHideConsole()}
+cM_consoleBt.ontouch = () => {
+	cM_consoleBt.onmouseup()
+	cM_showHideConsole()
 }
 
-consoleBt.innerHTML = `
+cM_consoleBt.innerHTML = `
 	<svg viewBox="0 0 40 40" fill="transparent" stroke="#ccc" stroke-width="3.5" stroke-linecap="butt">
 		<polyline points="10 11, 18 17, 10 23"/>
 		<line x1="20" y1="26" x2="30" y2="26"/>
 	</svg>
 `
 
-document.body.appendChild(consoleBt)
+document.body.appendChild(cM_consoleBt)
 
-let container = document.createElement('div')
-Object.assign(container.style, {
+let cM_container = document.createElement('div')
+Object.assign(cM_container.style, {
 	position: 'fixed',
 	top: '0',
 	left: '0',
@@ -73,8 +73,8 @@ Object.assign(container.style, {
 	transform: 'scale(0)'
 })
 
-let clearConsoleBt = document.createElement('div')
-Object.assign(clearConsoleBt.style, {
+let cM_clearConsoleBt = document.createElement('div')
+Object.assign(cM_clearConsoleBt.style, {
 	position: 'absolute',
 	right: '10px',
 	top: '10px',
@@ -91,42 +91,42 @@ Object.assign(clearConsoleBt.style, {
 	cursor: 'pointer',
 	userSelect: 'none'
 })
-clearConsoleBt.innerHTML = '&#X1F5D1'
+cM_clearConsoleBt.innerHTML = '&#X1F5D1'
 
-if (localStorage.getItem('clearConsoleBt.x')) {
-	clearConsoleBt.style.left = localStorage.getItem('clearConsoleBt.x')
-	clearConsoleBt.style.top = localStorage.getItem('clearConsoleBt.y')
+if (localStorage.getItem('cM_clearConsoleBt.x')) {
+	cM_clearConsoleBt.style.left = localStorage.getItem('cM_clearConsoleBt.x')
+	cM_clearConsoleBt.style.top = localStorage.getItem('cM_clearConsoleBt.y')
 }
 
-let movingClearConsoleBt = false
-clearConsoleBt.onmousedown = () => {
-	movingClearConsoleBt = true
-	Object.assign(clearConsoleBt.style, {
+let cM_movingClearConsoleBt = false
+cM_clearConsoleBt.onmousedown = () => {
+	cM_movingClearConsoleBt = true
+	Object.assign(cM_clearConsoleBt.style, {
 		transform: 'scale(.95)'
 	})
 }
-clearConsoleBt.ontouchstart = clearConsoleBt.onmousedown
+cM_clearConsoleBt.ontouchstart = cM_clearConsoleBt.onmousedown
 
-clearConsoleBt.onmouseup = () => {
-	Object.assign(clearConsoleBt.style, {
+cM_clearConsoleBt.onmouseup = () => {
+	Object.assign(cM_clearConsoleBt.style, {
 		transform: 'scale(1)'
 	})
 }
-clearConsoleBt.ontouchcancel = clearConsoleBt.onmouseup
-clearConsoleBt.ontouchend = clearConsoleBt.onmouseup
-clearConsoleBt.onmouseleave = clearConsoleBt.onmouseup
+cM_clearConsoleBt.ontouchcancel = cM_clearConsoleBt.onmouseup
+cM_clearConsoleBt.ontouchend = cM_clearConsoleBt.onmouseup
+cM_clearConsoleBt.onmouseleave = cM_clearConsoleBt.onmouseup
 
-clearConsoleBt.onclick = () => {clearConsole()}
-clearConsoleBt.ontouch = () => {
-	clearConsoleBt.onmouseup()
-	clearConsole()
+cM_clearConsoleBt.onclick = () => {cM_clearConsole()}
+cM_clearConsoleBt.ontouch = () => {
+	cM_clearConsoleBt.onmouseup()
+	cM_clearConsole()
 }
 
-container.appendChild(clearConsoleBt)
+cM_container.appendChild(cM_clearConsoleBt)
 
-let pre = document.createElement('pre')
-pre.id = 'consoleMobile_pre'
-Object.assign(pre.style, {
+let cM_pre = document.createElement('pre')
+cM_pre.id = 'cM_pre'
+Object.assign(cM_pre.style, {
 	width: '100%',
 	margin: '0',
 	padding: '0',
@@ -135,9 +135,9 @@ Object.assign(pre.style, {
 	overflow: 'auto'
 })
 
-let h1 = document.createElement('h1')
-h1.innerText = 'CONSOLE'
-Object.assign(h1.style, {
+let cM_h1 = document.createElement('h1')
+cM_h1.innerText = 'CONSOLE'
+Object.assign(cM_h1.style, {
 	background: '#0000004d',
 	margin: '0 0 20px',
 	width: '100%',
@@ -147,11 +147,11 @@ Object.assign(h1.style, {
 	borderBottom: '1px solid #0060ff',
 	fontFamily: "'Ubuntu Mono', monospace"
 })
-pre.appendChild(h1)
+cM_pre.appendChild(cM_h1)
 
-let input = document.createElement('textarea')
-input.rows = 1
-Object.assign(input.style, {
+let cM_input = document.createElement('textarea')
+cM_input.rows = 1
+Object.assign(cM_input.style, {
 	width: '100%',
 	minHeight: '60px',
 	background: 'linear-gradient(to bottom, #0000004d, transparent)',
@@ -169,20 +169,27 @@ Object.assign(input.style, {
 	tabSize: '20px'
 })
 
-input.addEventListener('input', () => {
-	input.rows = Math.floor(input.scrollHeight / 17)
+cM_input.addEventListener('input', () => {
+	cM_input.rows = Math.floor(cM_input.scrollHeight / 17)
 })
 
-container.addEventListener('dblclick', (e) => {
+cM_input.onfocus=()=>{
+	cM_sendBt.style.display='flex'
+}
+
+cM_input.onblur=()=>{
+	if (cM_input.value.trim()=='')
+		cM_sendBt.style.display='none'
+}
+
+cM_container.addEventListener('dblclick', (e) => {
 	e.preventDefault()
-	pre.scrollTo(0, pre.scrollHeight)
-	input.focus()
+	cM_pre.scrollTo(0, cM_pre.scrollHeight)
+	cM_input.focus()
 }, {passive: false})
 
-
-
-let sendBt = document.createElement('div')
-Object.assign(sendBt.style, {
+let cM_sendBt = document.createElement('div')
+Object.assign(cM_sendBt.style, {
 	position: 'absolute',
 	right: '10px',
 	bottom: '10px',
@@ -194,109 +201,108 @@ Object.assign(sendBt.style, {
 	width: '40px',
 	height: '40px',
 	webkitTapHighlightColor: 'transparent',
-	display: 'flex',
+	display: 'none',
 	justifyContent: 'center',
 	alignItems: 'center',
 	cursor: 'pointer',
 	userSelect: 'none'
 })
 
-if (localStorage.getItem('sendBt.x')) {
-	sendBt.style.left = localStorage.getItem('sendBt.x')
-	sendBt.style.top = localStorage.getItem('sendBt.y')
+if (localStorage.getItem('cM_sendBt.x')) {
+	cM_sendBt.style.left = localStorage.getItem('cM_sendBt.x')
+	cM_sendBt.style.top = localStorage.getItem('cM_sendBt.y')
 }
 
-let movingSendBt = false
-sendBt.onmousedown = () => {
-	movingSendBt = true
-	Object.assign(sendBt.style, {
+let cM_movingSendBt = false
+cM_sendBt.onmousedown = () => {
+	cM_movingSendBt = true
+	Object.assign(cM_sendBt.style, {
 		transform: 'scale(.95)'
 	})
 }
-sendBt.ontouchstart = sendBt.onmousedown
+cM_sendBt.ontouchstart = cM_sendBt.onmousedown
 
-sendBt.onmouseup = () => {
-	Object.assign(sendBt.style, {
+cM_sendBt.onmouseup = () => {
+	Object.assign(cM_sendBt.style, {
 		transform: 'scale(1)'
 	})
 }
-sendBt.ontouchcancel = sendBt.onmouseup
-sendBt.ontouchend = sendBt.onmouseup
-sendBt.onmouseleave = sendBt.onmouseup
+cM_sendBt.ontouchcancel = cM_sendBt.onmouseup
+cM_sendBt.ontouchend = cM_sendBt.onmouseup
+cM_sendBt.onmouseleave = cM_sendBt.onmouseup
 
-sendBt.onclick = () => {callConsole()}
-sendBt.ontouch = () => {
-	sendBt.onmouseup()
-	callConsole()
+cM_sendBt.onclick = () => {cM_callConsole()}
+cM_sendBt.ontouch = () => {
+	cM_sendBt.onmouseup()
+	cM_callConsole()
 }
 
-sendBt.innerHTML = `
+//<polyline points="0 18, 17 27, 31 13"/>
+cM_sendBt.innerHTML = `
 	<svg viewBox="0 0 40 40" fill="transparent" stroke="#ccc" stroke-width="4.5" stroke-linecap="butt">
-		<polyline points="9 18, 17 27, 31 13"/>
+		 <polyline points="12 19, 18 25, 28 16"/>
 	</svg>
 `
 
-container.appendChild(sendBt)
+cM_container.appendChild(cM_sendBt)
 
+cM_pre.appendChild(cM_input)
+cM_container.appendChild(cM_pre)
+document.body.appendChild(cM_container)
 
-
-pre.appendChild(input)
-container.appendChild(pre)
-document.body.appendChild(container)
-
-let showingConsole = false
-let h = ['left', 'center', 'right']
-let v = ['top', 'center', 'bottom']
-function showHideConsole() {
-	showingConsole = !showingConsole
-	if (showingConsole) {
-		container.style.transformOrigin = `${ h[Math.floor(Math.random() * 3)] } ${ v[Math.floor(Math.random() * 3)] }`
-		container.style.display = 'flex'
+let cM_showingConsole = false
+let cM_h = ['left', 'center', 'right']
+let cM_v = ['top', 'center', 'bottom']
+function cM_showHideConsole() {
+	cM_showingConsole = !cM_showingConsole
+	if (cM_showingConsole) {
+		cM_container.style.transformOrigin = `${ cM_h[Math.floor(Math.random() * 3)] } ${ cM_v[Math.floor(Math.random() * 3)] }`
+		cM_container.style.display = 'flex'
 		setTimeout(function () {
-			container.style.transform = 'scale(1)'
+			cM_container.style.transform = 'scale(1)'
 		}, 10)
 
 	}
 	else {
-		container.style.transform = 'scale(0)'
-		container.addEventListener('transitionend', hideConsole)
+		cM_container.style.transform = 'scale(0)'
+		cM_container.addEventListener('transitionend', cM_hideConsole)
 	}
 }
 
-function hideConsole() {
-	container.style.display = 'none'
-	container.removeEventListener('transitionend', hideConsole)
+function cM_hideConsole() {
+	cM_container.style.display = 'none'
+	cM_container.removeEventListener('transitionend', cM_hideConsole)
 }
 
-let oldLog = console.log
+let cM_oldLog = console.log
 
 console.log = (...items) => {
 
-	oldLog.apply(this, items)
+	cM_oldLog.apply(this, items)
 
 	items.forEach((item, i) => {
 		if (typeof item === 'object') {
 			if (item.tagName) {
-				let count = 0
-				let parent = item
-				while (parent.tagName != 'BODY') {
-					count++
-					parent = parent.parentNode
+				let cM_count = 0
+				let cM_parent = item
+				while (cM_parent.tagName != 'BODY') {
+					cM_count++
+					cM_parent = cM_parent.parentNode
 				}
 
-				let itemLines = item.outerHTML.split(/\r?\n/)
-				items[i] = itemLines[0] + '\n'
-				for (let o = 1; o < itemLines.length; o++) {
-					for (let p = 0; p < count; p++) {
-						itemLines[o] = itemLines[o].slice(1)
+				let cM_itemLines = item.outerHTML.split(/\r?\n/)
+				items[i] = cM_itemLines[0] + '\n'
+				for (let o = 1; o < cM_itemLines.length; o++) {
+					for (let p = 0; p < cM_count; p++) {
+						cM_itemLines[o] = cM_itemLines[o].slice(1)
 					}
-					items[i] += itemLines[o] + '\n'
+					items[i] += cM_itemLines[o] + '\n'
 				}
-				while (itemLines[itemLines.length - 1].charAt(0) == ' ' || itemLines[itemLines.length - 1].charAt(0) == '\t') {
-					items[i] = itemLines[0] + '\n'
-					for (let o = 1; o < itemLines.length; o++) {
-						itemLines[o] = itemLines[o].slice(1)
-						items[i] += itemLines[o] + '\n'
+				while (cM_itemLines[cM_itemLines.length - 1].charAt(0) == ' ' || cM_itemLines[cM_itemLines.length - 1].charAt(0) == '\t') {
+					items[i] = cM_itemLines[0] + '\n'
+					for (let o = 1; o < cM_itemLines.length; o++) {
+						cM_itemLines[o] = cM_itemLines[o].slice(1)
+						items[i] += cM_itemLines[o] + '\n'
 					}
 				}
 			}
@@ -308,17 +314,18 @@ console.log = (...items) => {
 			items[i] = item
 		// items[i] = (typeof item === 'object' ? item.tagName ? item.outerHTML : JSON.stringify(item, null, 2) : item)
 	})
-	let output = document.createElement('div')
-	output.classList.add('consoleMobile_output')
-	output.innerText += `${ items.join(' ') }\n`
-	pre.insertBefore(output, input)
-	pre.scrollTo(0, pre.scrollHeight)
+	let cM_output = document.createElement('div')
+	cM_output.classList.add('cM_output')
+	cM_output.innerText += `${ items.join(' ') }\n`
+	cM_pre.insertBefore(cM_output, cM_input)
+	cM_pre.scrollTo(0, cM_pre.scrollHeight)
+	cM_sendBt.style.display='none'
 }
 
-function consoleInput(data) {
-	let text = document.createElement('p')
-	text.innerText = data
-	Object.assign(text.style, {
+function cM_consoleInput(data) {
+	let cM_text = document.createElement('p')
+	cM_text.innerText = data
+	Object.assign(cM_text.style, {
 		margin: '30px auto 0',
 		padding: '0 12px',
 		boxSizing: 'border-box',
@@ -326,184 +333,186 @@ function consoleInput(data) {
 		width: '95%',
 		overflow: 'auto'
 	})
-	pre.insertBefore(text, input)
+	cM_pre.insertBefore(cM_text, cM_input)
 	try {
 		console.log(eval(data))
 	}
 	catch (e) {
-		let errorDiv = document.createElement('div')
-		errorDiv.classList.add('consoleMobile_errorDiv')
+		let cM_errorDiv = document.createElement('div')
+		cM_errorDiv.classList.add('cM_errorDiv')
 
-		let span = document.createElement('span')
-		span.classList.add('consoleMobile_error-span')
-		span.innerText = e.stack + ' '
-		errorDiv.appendChild(span)
+		let cM_span = document.createElement('span')
+		cM_span.classList.add('cM_error-span')
+		cM_span.innerText = e.stack + ' '
+		cM_errorDiv.appendChild(cM_span)
 
-		pre.insertBefore(errorDiv, input)
+		cM_pre.insertBefore(cM_errorDiv, cM_input)
 	}
-	pre.scrollTo(0, pre.scrollHeight)
+	cM_pre.scrollTo(0, cM_pre.scrollHeight)
+	cM_sendBt.style.display='none'
 }
 
-function callConsole(e) {
-	if (input.value.trim() != '') {
-		consoleInput(input.value)
-		input.value = ''
-		input.rows = 1
+function cM_callConsole(e) {
+	if (cM_input.value.trim() != '') {
+		cM_consoleInput(cM_input.value)
+		cM_input.value = ''
+		cM_input.rows = 1
 	}
 }
 
-function clearConsole() {
-	pre.innerHTML = ''
-	pre.appendChild(h1)
-	pre.appendChild(input)
+function cM_clearConsole() {
+	cM_pre.innerHTML = ''
+	cM_pre.appendChild(cM_h1)
+	cM_pre.appendChild(cM_input)
 }
 
 document.body.onresize = () => {
-	if (consoleBt.offsetLeft < 0) {
-		consoleBt.style.left = '0'
-		localStorage.setItem('consoleBt.x', consoleBt.style.left)
+	if (cM_consoleBt.offsetLeft < 0) {
+		cM_consoleBt.style.left = '0'
+		localStorage.setItem('cM_consoleBt.x', cM_consoleBt.style.left)
 	}
-	if (consoleBt.offsetLeft + consoleBt.offsetWidth > window.innerWidth) {
-		consoleBt.style.left = window.innerWidth - consoleBt.offsetWidth + 'px'
-		localStorage.setItem('consoleBt.x', consoleBt.style.left)
+	if (cM_consoleBt.offsetLeft + cM_consoleBt.offsetWidth > window.innerWidth) {
+		cM_consoleBt.style.left = window.innerWidth - cM_consoleBt.offsetWidth + 'px'
+		localStorage.setItem('cM_consoleBt.x', cM_consoleBt.style.left)
 	}
-	if (consoleBt.offsetTop < 0) {
-		consoleBt.style.top = '0'
-		localStorage.setItem('consoleBt.y', consoleBt.style.top)
+	if (cM_consoleBt.offsetTop < 0) {
+		cM_consoleBt.style.top = '0'
+		localStorage.setItem('cM_consoleBt.y', cM_consoleBt.style.top)
 	}
-	if (consoleBt.offsetTop + consoleBt.offsetHeight > window.innerHeight) {
-		consoleBt.style.top = window.innerHeight - consoleBt.offsetHeight + 'px'
-		localStorage.setItem('consoleBt.y', consoleBt.style.top)
-	}
-
-	if (clearConsoleBt.offsetLeft < 0) {
-		clearConsoleBt.style.left = '0'
-		localStorage.setItem('clearConsoleBt.x', clearConsoleBt.style.left)
-	}
-	if (clearConsoleBt.offsetLeft + clearConsoleBt.offsetWidth > window.innerWidth) {
-		clearConsoleBt.style.left = window.innerWidth - clearConsoleBt.offsetWidth + 'px'
-		localStorage.setItem('clearConsoleBt.x', clearConsoleBt.style.left)
-	}
-	if (clearConsoleBt.offsetTop < 0) {
-		clearConsoleBt.style.top = '0'
-		localStorage.setItem('clearConsoleBt.y', clearConsoleBt.style.top)
-	}
-	if (clearConsoleBt.offsetTop + clearConsoleBt.offsetHeight > window.innerHeight) {
-		clearConsoleBt.style.top = window.innerHeight - clearConsoleBt.offsetHeight + 'px'
-		localStorage.setItem('clearConsoleBt.y', clearConsoleBt.style.top)
+	if (cM_consoleBt.offsetTop + cM_consoleBt.offsetHeight > window.innerHeight) {
+		cM_consoleBt.style.top = window.innerHeight - cM_consoleBt.offsetHeight + 'px'
+		localStorage.setItem('cM_consoleBt.y', cM_consoleBt.style.top)
 	}
 
-	if (sendBt.offsetLeft < 0) {
-		sendBt.style.left = '0'
-		localStorage.setItem('sendBt.x', sendBt.style.left)
+	if (cM_clearConsoleBt.offsetLeft < 0) {
+		cM_clearConsoleBt.style.left = '0'
+		localStorage.setItem('cM_clearConsoleBt.x', cM_clearConsoleBt.style.left)
 	}
-	if (sendBt.offsetLeft + sendBt.offsetWidth > window.innerWidth) {
-		sendBt.style.left = window.innerWidth - sendBt.offsetWidth + 'px'
-		localStorage.setItem('sendBt.x', sendBt.style.left)
+	if (cM_clearConsoleBt.offsetLeft + cM_clearConsoleBt.offsetWidth > window.innerWidth) {
+		cM_clearConsoleBt.style.left = window.innerWidth - cM_clearConsoleBt.offsetWidth + 'px'
+		localStorage.setItem('cM_clearConsoleBt.x', cM_clearConsoleBt.style.left)
 	}
-	if (sendBt.offsetTop < 0) {
-		sendBt.style.top = '0'
-		localStorage.setItem('sendBt.y', sendBt.style.top)
+	if (cM_clearConsoleBt.offsetTop < 0) {
+		cM_clearConsoleBt.style.top = '0'
+		localStorage.setItem('cM_clearConsoleBt.y', cM_clearConsoleBt.style.top)
 	}
-	if (sendBt.offsetTop + sendBt.offsetHeight > window.innerHeight) {
-		sendBt.style.top = window.innerHeight - sendBt.offsetHeight + 'px'
-		localStorage.setItem('sendBt.y', sendBt.style.top)
+	if (cM_clearConsoleBt.offsetTop + cM_clearConsoleBt.offsetHeight > window.innerHeight) {
+		cM_clearConsoleBt.style.top = window.innerHeight - cM_clearConsoleBt.offsetHeight + 'px'
+		localStorage.setItem('cM_clearConsoleBt.y', cM_clearConsoleBt.style.top)
+	}
+
+	if (cM_sendBt.offsetLeft < 0) {
+		cM_sendBt.style.left = '0'
+		localStorage.setItem('cM_sendBt.x', cM_sendBt.style.left)
+	}
+	if (cM_sendBt.offsetLeft + cM_sendBt.offsetWidth > window.innerWidth) {
+		cM_sendBt.style.left = window.innerWidth - cM_sendBt.offsetWidth + 'px'
+		localStorage.setItem('cM_sendBt.x', cM_sendBt.style.left)
+	}
+	if (cM_sendBt.offsetTop < 0) {
+		cM_sendBt.style.top = '0'
+		localStorage.setItem('cM_sendBt.y', cM_sendBt.style.top)
+	}
+	if (cM_sendBt.offsetTop + cM_sendBt.offsetHeight > window.innerHeight) {
+		cM_sendBt.style.top = window.innerHeight - cM_sendBt.offsetHeight + 'px'
+		localStorage.setItem('cM_sendBt.y', cM_sendBt.style.top)
 	}
 }
 
 window.onerror = (msg, url, lineNo, columnNo, error) => {
-	let errorDiv = document.createElement('div')
-	errorDiv.classList.add('consoleMobile_errorDiv')
+	let cM_errorDiv = document.createElement('div')
+	cM_errorDiv.classList.add('cM_errorDiv')
 
-	let b = document.createElement('b')
-	b.classList.add('consoleMobile_error-b')
-	b.innerText = msg + ' '
-	errorDiv.appendChild(b)
+	let cM_b = document.createElement('b')
+	cM_b.classList.add('cM_error-b')
+	cM_b.innerText = msg + ' '
+	cM_errorDiv.appendChild(cM_b)
 
-	let urlSpan = document.createElement('span')
-	urlSpan.classList.add('consoleMobile_urlSpan')
+	let cM_urlSpan = document.createElement('span')
+	cM_urlSpan.classList.add('cM_urlSpan')
 
-	let a = document.createElement('a')
-	a.href = url
-	a.target = '_blank'
-	a.innerText = url
-	a.classList.add('consoleMobile_error-a')
-	urlSpan.appendChild(a)
+	let cM_a = document.createElement('a')
+	cM_a.href = url
+	cM_a.target = '_blank'
+	cM_a.innerText = url
+	cM_a.classList.add('cM_error-a')
+	cM_urlSpan.appendChild(cM_a)
 
-	let span = document.createElement('span')
-	span.classList.add('consoleMobile_error-lineCol-span')
-	span.innerText = `Linha: ${ lineNo }	Coluna: ${ columnNo }`
-	urlSpan.appendChild(span)
+	let cM_span = document.createElement('span')
+	cM_span.classList.add('cM_error-lineCol-span')
+	cM_span.innerText = `Linha: ${ lineNo }	Coluna: ${ columnNo }`
+	cM_urlSpan.appendChild(cM_span)
 
-	errorDiv.appendChild(urlSpan)
+	cM_errorDiv.appendChild(cM_urlSpan)
 
-	pre.insertBefore(errorDiv, input)
-	pre.scrollTo(0, pre.scrollHeight)
+	cM_pre.insertBefore(cM_errorDiv, cM_input)
+	cM_pre.scrollTo(0, cM_pre.scrollHeight)
+	cM_sendBt.style.display='none'
 }
 
 document.onmousemove = (e) => {
-	if (movingBt) {
-		consoleBt.style.left = e.clientX - 20 + 'px',
-			consoleBt.style.top = e.clientY - 20 + 'px'
+	if (cM_movingBt) {
+		cM_consoleBt.style.left = e.clientX - 20 + 'px',
+			cM_consoleBt.style.top = e.clientY - 20 + 'px'
 	}
-	if (movingClearConsoleBt) {
-		clearConsoleBt.style.left = e.clientX - 20 + 'px',
-			clearConsoleBt.style.top = e.clientY - 20 + 'px'
+	if (cM_movingClearConsoleBt) {
+		cM_clearConsoleBt.style.left = e.clientX - 20 + 'px',
+			cM_clearConsoleBt.style.top = e.clientY - 20 + 'px'
 	}
-	if (movingSendBt) {
-		sendBt.style.left = e.clientX - 20 + 'px',
-			sendBt.style.top = e.clientY - 20 + 'px'
+	if (cM_movingSendBt) {
+		cM_sendBt.style.left = e.clientX - 20 + 'px',
+		cM_sendBt.style.top = e.clientY - 20 + 'px'
 	}
 }
 document.addEventListener('touchmove', (e) => {
-	if (movingBt) {
+	if (cM_movingBt) {
 		e.preventDefault()
-		consoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
-			consoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+		cM_consoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
+			cM_consoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
 	}
-	if (movingClearConsoleBt) {
+	if (cM_movingClearConsoleBt) {
 		e.preventDefault()
-		clearConsoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
-			clearConsoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+		cM_clearConsoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
+		cM_clearConsoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
 	}
-	if (movingSendBt) {
+	if (cM_movingSendBt) {
 		e.preventDefault()
-		sendBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
-			sendBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+		cM_sendBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
+		cM_sendBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
 	}
 }, {passive: false})
 
 document.onmouseup = () => {
-	if (movingBt) {
-		movingBt = false
-		localStorage.setItem('consoleBt.x', consoleBt.style.left)
-		localStorage.setItem('consoleBt.y', consoleBt.style.top)
+	if (cM_movingBt) {
+		cM_movingBt = false
+		localStorage.setItem('cM_consoleBt.x', cM_consoleBt.style.left)
+		localStorage.setItem('cM_consoleBt.y', cM_consoleBt.style.top)
 	}
-	if (movingClearConsoleBt) {
-		movingClearConsoleBt = false
-		localStorage.setItem('clearConsoleBt.x', clearConsoleBt.style.left)
-		localStorage.setItem('clearConsoleBt.y', clearConsoleBt.style.top)
+	if (cM_movingClearConsoleBt) {
+		cM_movingClearConsoleBt = false
+		localStorage.setItem('cM_clearConsoleBt.x', cM_clearConsoleBt.style.left)
+		localStorage.setItem('cM_clearConsoleBt.y', cM_clearConsoleBt.style.top)
 	}
-	if (movingSendBt) {
-		movingSendBt = false
-		localStorage.setItem('sendBt.x', sendBt.style.left)
-		localStorage.setItem('sendBt.y', sendBt.style.top)
+	if (cM_movingSendBt) {
+		cM_movingSendBt = false
+		localStorage.setItem('cM_sendBt.x', cM_sendBt.style.left)
+		localStorage.setItem('cM_sendBt.y', cM_sendBt.style.top)
 	}
 }
 
 document.ontouchend = document.onmouseup
 
-let style = document.createElement('style')
-style.appendChild(document.createTextNode(`
+let cM_style = document.createElement('style')
+cM_style.appendChild(document.createTextNode(`
 	@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
 
-	#consoleMobile_pre ::selection {
+	#cM_pre ::selection {
 		background: #0030cc;
 		font-family: 'Ubuntu Mono', monospace;
 		color: #fff;
 	}
 
-	.consoleMobile_output{
+	.cM_output{
 		tab-size: 20px;
 		background: #0060ff2d;
 		margin: 2px auto;
@@ -516,7 +525,7 @@ style.appendChild(document.createTextNode(`
 		font-family: 'Ubuntu Mono', monospace;
 	}
 
-	.consoleMobile_errorDiv {
+	.cM_errorDiv {
 		background: #ff60003d;
 		margin: 2px auto;
 		padding: 20px;
@@ -528,19 +537,19 @@ style.appendChild(document.createTextNode(`
 		font-family: 'Ubuntu Mono', monospace;
 	}
 
-	.consoleMobile_output ::selection,
-	.consoleMobile_errorDiv ::selection {
+	.cM_output ::selection,
+	.cM_errorDiv ::selection {
 		background: #0030cc;
 		color: #fff;
 	}
 
-	.consoleMobile_error-b {
+	.cM_error-b {
 		font-weight: bolder;
 		font-size: 18px;
 		color: #ff6000;
 	}
 
-	.consoleMobile_urlSpan {
+	.cM_urlSpan {
 		display: flex;
 		justify-content: space-between;
 		flex-wrap: wrap;
@@ -548,11 +557,11 @@ style.appendChild(document.createTextNode(`
 		margin-top: 8px;
 	}
 
-	.consoleMobile_error-a {
+	.cM_error-a {
 		color: #0060ff;
 		font-size: 16px;
 		margin: 0 8px 8px 0;
 	}
 
 `))
-document.getElementsByTagName('head')[0].appendChild(style)
+document.getElementsByTagName('head')[0].appendChild(cM_style)
