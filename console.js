@@ -23,11 +23,20 @@ if (localStorage.getItem('cM_consoleBt.x')) {
 }
 
 let cM_movingBt = false
-cM_consoleBt.onmousedown = () => {
+let cM_innerClickX,cM_innerClickY
+cM_consoleBt.onmousedown = (e) => {
 	cM_movingBt = true
 	Object.assign(cM_consoleBt.style, {
 		transform: 'scale(.95)'
 	})
+	if(e.clientX){
+		cM_innerClickX = e.clientX - cM_consoleBt.offsetLeft
+		cM_innerClickY = e.clientY - cM_consoleBt.offsetTop
+	}
+	else{
+		cM_innerClickX=e.touches[0].clientX-cM_consoleBt.offsetLeft
+		cM_innerClickY=e.touches[0].clientY-cM_consoleBt.offsetTop
+	}
 }
 cM_consoleBt.ontouchstart = cM_consoleBt.onmousedown
 
@@ -99,11 +108,19 @@ if (localStorage.getItem('cM_clearConsoleBt.x')) {
 }
 
 let cM_movingClearConsoleBt = false
-cM_clearConsoleBt.onmousedown = () => {
+cM_clearConsoleBt.onmousedown = (e) => {
 	cM_movingClearConsoleBt = true
 	Object.assign(cM_clearConsoleBt.style, {
 		transform: 'scale(.95)'
 	})
+	if(e.clientX){
+		cM_innerClickX = e.clientX - cM_clearConsoleBt.offsetLeft
+		cM_innerClickY = e.clientY - cM_clearConsoleBt.offsetTop
+	}
+	else{
+		cM_innerClickX=e.touches[0].clientX-cM_clearConsoleBt.offsetLeft
+		cM_innerClickY=e.touches[0].clientY-cM_clearConsoleBt.offsetTop
+	}
 }
 cM_clearConsoleBt.ontouchstart = cM_clearConsoleBt.onmousedown
 
@@ -214,11 +231,19 @@ if (localStorage.getItem('cM_sendBt.x')) {
 }
 
 let cM_movingSendBt = false
-cM_sendBt.onmousedown = () => {
+cM_sendBt.onmousedown = (e) => {
 	cM_movingSendBt = true
 	Object.assign(cM_sendBt.style, {
 		transform: 'scale(.95)'
 	})
+	if(e.clientX){
+		cM_innerClickX = e.clientX - cM_sendBt.offsetLeft
+		cM_innerClickY = e.clientY - cM_sendBt.offsetTop
+	}
+	else{
+		cM_innerClickX=e.touches[0].clientX-cM_sendBt.offsetLeft
+		cM_innerClickY=e.touches[0].clientY-cM_sendBt.offsetTop
+	}
 }
 cM_sendBt.ontouchstart = cM_sendBt.onmousedown
 
@@ -452,33 +477,33 @@ window.onerror = (msg, url, lineNo, columnNo, error) => {
 
 document.onmousemove = (e) => {
 	if (cM_movingBt) {
-		cM_consoleBt.style.left = e.clientX - 20 + 'px',
-			cM_consoleBt.style.top = e.clientY - 20 + 'px'
+		cM_consoleBt.style.left = e.clientX - cM_innerClickX + 'px',
+		cM_consoleBt.style.top = e.clientY - cM_innerClickY + 'px'
 	}
 	if (cM_movingClearConsoleBt) {
-		cM_clearConsoleBt.style.left = e.clientX - 20 + 'px',
-			cM_clearConsoleBt.style.top = e.clientY - 20 + 'px'
+		cM_clearConsoleBt.style.left = e.clientX - cM_innerClickX + 'px',
+		cM_clearConsoleBt.style.top = e.clientY - cM_innerClickY + 'px'
 	}
 	if (cM_movingSendBt) {
-		cM_sendBt.style.left = e.clientX - 20 + 'px',
-		cM_sendBt.style.top = e.clientY - 20 + 'px'
+		cM_sendBt.style.left = e.clientX - cM_innerClickX + 'px',
+		cM_sendBt.style.top = e.clientY - cM_innerClickY + 'px'
 	}
 }
 document.addEventListener('touchmove', (e) => {
 	if (cM_movingBt) {
 		e.preventDefault()
-		cM_consoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
-			cM_consoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+		cM_consoleBt.style.left = e.touches[e.touches.length - 1].clientX - cM_innerClickX + 'px',
+		cM_consoleBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
 	}
 	if (cM_movingClearConsoleBt) {
 		e.preventDefault()
-		cM_clearConsoleBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
-		cM_clearConsoleBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+		cM_clearConsoleBt.style.left = e.touches[e.touches.length - 1].clientX - cM_innerClickX + 'px',
+		cM_clearConsoleBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
 	}
 	if (cM_movingSendBt) {
 		e.preventDefault()
-		cM_sendBt.style.left = e.touches[e.touches.length - 1].clientX - 20 + 'px',
-		cM_sendBt.style.top = e.touches[e.touches.length - 1].clientY - 20 + 'px'
+		cM_sendBt.style.left = e.touches[e.touches.length - 1].clientX - cM_innerClickX + 'px',
+		cM_sendBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
 	}
 }, {passive: false})
 
