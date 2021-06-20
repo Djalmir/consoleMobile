@@ -74,11 +74,11 @@ Object.assign(cM_container.style, {
 	display: 'none',
 	flexDirection: 'column',
 	backgroundColor: '#000000cc',
-	backdropFilter: 'blur(10px)',
+	//backdropFilter: 'blur(10px)',
 	color: '#fff',
 	boxSizing: 'border-box',
 	zIndex: '9998',
-	transition: '.1s linear',
+	transition: '.2s ease-in-out',
 	transform: 'scale(0)'
 })
 
@@ -187,6 +187,7 @@ Object.assign(cM_input.style, {
 })
 
 cM_input.addEventListener('input', () => {
+	cM_input.rows = 1
 	cM_input.rows = Math.floor(cM_input.scrollHeight / 17)
 })
 
@@ -283,12 +284,14 @@ function cM_showHideConsole() {
 	if (cM_showingConsole) {
 		cM_container.style.transformOrigin = `${ cM_h[Math.floor(Math.random() * 3)] } ${ cM_v[Math.floor(Math.random() * 3)] }`
 		cM_container.style.display = 'flex'
-		setTimeout(function () {
-			cM_container.style.transform = 'scale(1)'
+		setTimeout(async function () {
+			cM_container.style.transform = await 'scale(1)'
+			cM_container.style.backdropFilter = 'blur(10px)'
 		}, 10)
 
 	}
 	else {
+		cM_container.style.backdropFilter = ''
 		cM_container.style.transform = 'scale(0)'
 		cM_container.addEventListener('transitionend', cM_hideConsole)
 	}
