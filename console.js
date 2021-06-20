@@ -23,19 +23,19 @@ if (localStorage.getItem('cM_consoleBt.x')) {
 }
 
 let cM_movingBt = false
-let cM_innerClickX,cM_innerClickY
+let cM_innerClickX, cM_innerClickY
 cM_consoleBt.onmousedown = (e) => {
 	cM_movingBt = true
 	Object.assign(cM_consoleBt.style, {
 		transform: 'scale(.95)'
 	})
-	if(e.clientX){
+	if (e.clientX) {
 		cM_innerClickX = e.clientX - cM_consoleBt.offsetLeft
 		cM_innerClickY = e.clientY - cM_consoleBt.offsetTop
 	}
-	else{
-		cM_innerClickX=e.touches[0].clientX-cM_consoleBt.offsetLeft
-		cM_innerClickY=e.touches[0].clientY-cM_consoleBt.offsetTop
+	else {
+		cM_innerClickX = e.touches[0].clientX - cM_consoleBt.offsetLeft
+		cM_innerClickY = e.touches[0].clientY - cM_consoleBt.offsetTop
 	}
 }
 cM_consoleBt.ontouchstart = cM_consoleBt.onmousedown
@@ -113,13 +113,13 @@ cM_clearConsoleBt.onmousedown = (e) => {
 	Object.assign(cM_clearConsoleBt.style, {
 		transform: 'scale(.95)'
 	})
-	if(e.clientX){
+	if (e.clientX) {
 		cM_innerClickX = e.clientX - cM_clearConsoleBt.offsetLeft
 		cM_innerClickY = e.clientY - cM_clearConsoleBt.offsetTop
 	}
-	else{
-		cM_innerClickX=e.touches[0].clientX-cM_clearConsoleBt.offsetLeft
-		cM_innerClickY=e.touches[0].clientY-cM_clearConsoleBt.offsetTop
+	else {
+		cM_innerClickX = e.touches[0].clientX - cM_clearConsoleBt.offsetLeft
+		cM_innerClickY = e.touches[0].clientY - cM_clearConsoleBt.offsetTop
 	}
 }
 cM_clearConsoleBt.ontouchstart = cM_clearConsoleBt.onmousedown
@@ -191,13 +191,13 @@ cM_input.addEventListener('input', () => {
 	cM_input.rows = Math.floor(cM_input.scrollHeight / 17)
 })
 
-cM_input.onfocus=()=>{
-	cM_sendBt.style.display='flex'
+cM_input.onfocus = () => {
+	cM_sendBt.style.display = 'flex'
 }
 
-cM_input.onblur=()=>{
-	if (cM_input.value.trim()=='')
-		cM_sendBt.style.display='none'
+cM_input.onblur = () => {
+	if (cM_input.value.trim() == '')
+		cM_sendBt.style.display = 'none'
 }
 
 cM_container.addEventListener('dblclick', (e) => {
@@ -237,13 +237,13 @@ cM_sendBt.onmousedown = (e) => {
 	Object.assign(cM_sendBt.style, {
 		transform: 'scale(.95)'
 	})
-	if(e.clientX){
+	if (e.clientX) {
 		cM_innerClickX = e.clientX - cM_sendBt.offsetLeft
 		cM_innerClickY = e.clientY - cM_sendBt.offsetTop
 	}
-	else{
-		cM_innerClickX=e.touches[0].clientX-cM_sendBt.offsetLeft
-		cM_innerClickY=e.touches[0].clientY-cM_sendBt.offsetTop
+	else {
+		cM_innerClickX = e.touches[0].clientX - cM_sendBt.offsetLeft
+		cM_innerClickY = e.touches[0].clientY - cM_sendBt.offsetTop
 	}
 }
 cM_sendBt.ontouchstart = cM_sendBt.onmousedown
@@ -286,7 +286,9 @@ function cM_showHideConsole() {
 		cM_container.style.display = 'flex'
 		setTimeout(async function () {
 			cM_container.style.transform = await 'scale(1)'
-			cM_container.style.backdropFilter = 'blur(10px)'
+			setTimeout(() => {
+				cM_container.style.backdropFilter = 'blur(10px)'
+			}, 10)
 		}, 10)
 
 	}
@@ -347,7 +349,7 @@ console.log = (...items) => {
 	cM_output.innerText += `${ items.join(' ') }\n`
 	cM_pre.insertBefore(cM_output, cM_input)
 	cM_pre.scrollTo(0, cM_pre.scrollHeight)
-	cM_sendBt.style.display='none'
+	cM_sendBt.style.display = 'none'
 }
 
 function cM_consoleInput(data) {
@@ -377,7 +379,7 @@ function cM_consoleInput(data) {
 		cM_pre.insertBefore(cM_errorDiv, cM_input)
 	}
 	cM_pre.scrollTo(0, cM_pre.scrollHeight)
-	cM_sendBt.style.display='none'
+	cM_sendBt.style.display = 'none'
 }
 
 function cM_callConsole(e) {
@@ -475,38 +477,38 @@ window.onerror = (msg, url, lineNo, columnNo, error) => {
 
 	cM_pre.insertBefore(cM_errorDiv, cM_input)
 	cM_pre.scrollTo(0, cM_pre.scrollHeight)
-	cM_sendBt.style.display='none'
+	cM_sendBt.style.display = 'none'
 }
 
 document.onmousemove = (e) => {
 	if (cM_movingBt) {
 		cM_consoleBt.style.left = e.clientX - cM_innerClickX + 'px',
-		cM_consoleBt.style.top = e.clientY - cM_innerClickY + 'px'
+			cM_consoleBt.style.top = e.clientY - cM_innerClickY + 'px'
 	}
 	if (cM_movingClearConsoleBt) {
 		cM_clearConsoleBt.style.left = e.clientX - cM_innerClickX + 'px',
-		cM_clearConsoleBt.style.top = e.clientY - cM_innerClickY + 'px'
+			cM_clearConsoleBt.style.top = e.clientY - cM_innerClickY + 'px'
 	}
 	if (cM_movingSendBt) {
 		cM_sendBt.style.left = e.clientX - cM_innerClickX + 'px',
-		cM_sendBt.style.top = e.clientY - cM_innerClickY + 'px'
+			cM_sendBt.style.top = e.clientY - cM_innerClickY + 'px'
 	}
 }
 document.addEventListener('touchmove', (e) => {
 	if (cM_movingBt) {
 		e.preventDefault()
 		cM_consoleBt.style.left = e.touches[e.touches.length - 1].clientX - cM_innerClickX + 'px',
-		cM_consoleBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
+			cM_consoleBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
 	}
 	if (cM_movingClearConsoleBt) {
 		e.preventDefault()
 		cM_clearConsoleBt.style.left = e.touches[e.touches.length - 1].clientX - cM_innerClickX + 'px',
-		cM_clearConsoleBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
+			cM_clearConsoleBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
 	}
 	if (cM_movingSendBt) {
 		e.preventDefault()
 		cM_sendBt.style.left = e.touches[e.touches.length - 1].clientX - cM_innerClickX + 'px',
-		cM_sendBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
+			cM_sendBt.style.top = e.touches[e.touches.length - 1].clientY - cM_innerClickY + 'px'
 	}
 }, {passive: false})
 
