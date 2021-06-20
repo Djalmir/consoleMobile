@@ -78,7 +78,7 @@ Object.assign(cM_container.style, {
 	color: '#fff',
 	boxSizing: 'border-box',
 	zIndex: '9998',
-	transition: '.2s ease-in-out',
+	transition: 'transform .2s ease-in-out',
 	transform: 'scale(0)'
 })
 
@@ -286,9 +286,7 @@ function cM_showHideConsole() {
 		cM_container.style.display = 'flex'
 		setTimeout(async function () {
 			cM_container.style.transform = await 'scale(1)'
-			setTimeout(() => {
-				cM_container.style.backdropFilter = 'blur(10px)'
-			}, 10)
+			cM_container.addEventListener('transitionend', setBlur)			
 		}, 10)
 
 	}
@@ -302,6 +300,11 @@ function cM_showHideConsole() {
 function cM_hideConsole() {
 	cM_container.style.display = 'none'
 	cM_container.removeEventListener('transitionend', cM_hideConsole)
+}
+
+function setBlur() {
+	cM_container.style.backdropFilter = 'blur(10px)'
+	cM_container.removeEventListener('transitionend', setBlur)
 }
 
 let cM_oldLog = console.log
